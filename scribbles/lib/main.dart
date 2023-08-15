@@ -1,32 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() => runApp(MyApp());
+import 'package:scribbles/screens/auth.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const App());
+}
+
+class App extends StatelessWidget {
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-            color: Colors.white,
-            elevation: 0,
-            titleTextStyle: TextStyle(
-              color: Colors.black,
-              fontSize: 26,
-              fontWeight: FontWeight.bold,
-            )),
-        colorScheme: ColorScheme.fromSwatch(
-            backgroundColor: Colors.white, accentColor: Colors.black),
-      ),
-      title: 'Scribbles',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Scribbles'),
+        title: 'FlutterChat',
+        theme: ThemeData().copyWith(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color.fromARGB(255, 63, 17, 177)),
         ),
-        body: Center(child: Text('Home')),
-      ),
-    );
+        home: const AuthScreen());
   }
 }
