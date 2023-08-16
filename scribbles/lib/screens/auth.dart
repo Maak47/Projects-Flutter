@@ -124,6 +124,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                 !value.contains('@')) {
                               return 'Please enter a valid email';
                             }
+                            return null;
                           },
                           onSaved: (value) {
                             _enteredEmail = value!;
