@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,7 +20,9 @@ class _AuthScreenState extends State<AuthScreen> {
   var _isLogin = true;
   var _enteredEmail = '';
   var _enteredPassword = '';
+  var _enteredUsername = '';
   var _isAuthenticating = false;
+
   File? _selectedImage;
 
   void _submit() async {
@@ -47,7 +50,14 @@ class _AuthScreenState extends State<AuthScreen> {
               .child('${userCredentials.user!.uid}.jpeg');
           await storageRef.putFile(_selectedImage!);
           final imageUrl = await storageRef.getDownloadURL();
-          print(imageUrl);
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(userCredentials.user!.uid)
+              .set({
+            'username': _enteredUsername,
+            'email': _enteredEmail,
+            'image_url': imageUrl,
+          });
         }
       } on FirebaseAuthException catch (error) {
         if (error.code == 'email-already-in-use') {
@@ -119,6 +129,21 @@ class _AuthScreenState extends State<AuthScreen> {
                             _enteredEmail = value!;
                           },
                         ),
+                        if (!_isLogin)
+                          TextFormField(
+                            enableSuggestions: false,
+                            decoration:
+                                const InputDecoration(labelText: 'Username'),
+                            validator: (value) {
+                              if (value == null || value.trim().length < 4) {
+                                return 'Username must be 4 characters long';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _enteredUsername = value!;
+                            },
+                          ),
                         TextFormField(
                           decoration:
                               const InputDecoration(labelText: 'Password'),
