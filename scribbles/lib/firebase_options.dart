@@ -48,12 +48,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyAHkSyUV8FUXYusq1QCb1ERY_Vj2DsL-o4',
-    appId: '1:172361618330:web:91a1dc6356dc10ccb36023',
+    appId: '1:172361618330:web:caf79b31934bdc95b36023',
     messagingSenderId: '172361618330',
     projectId: 'scribbles2',
     authDomain: 'scribbles2.firebaseapp.com',
     storageBucket: 'scribbles2.appspot.com',
-    measurementId: 'G-MHB2D44LY1',
+    measurementId: 'G-0T9TP119EP',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
