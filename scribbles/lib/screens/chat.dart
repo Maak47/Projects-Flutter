@@ -16,6 +16,7 @@ class _ChatScreenState extends State<ChatScreen> {
     final fcm = FirebaseMessaging.instance;
     await fcm.requestPermission();
 
+    // ignore: unused_local_variable
     final token = await fcm.getToken();
     fcm.subscribeToTopic('chat');
   }
