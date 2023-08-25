@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import './screens/auth.dart';
-import './screens/tabs.dart';
+import './authentication_user_form/screens/auth.dart';
+import 'tabs_screens/tabs.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
             tertiary: Colors.grey),
         useMaterial3: true,
       ),
+      // home: NewUserFormScreen(),
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (ctx, snapshot) {

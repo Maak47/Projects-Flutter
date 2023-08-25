@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'package:inner_voice/screens/tabs.dart';
-import 'package:inner_voice/widgets/profile_card.dart';
-import 'package:inner_voice/widgets/profile_post_grid.dart';
+import 'package:inner_voice/tabs_screens/tabs.dart';
+import '../widgets/profile_card.dart';
+import '../widgets/profile_post_grid.dart';
 
 class UserSelfProfileScreen extends StatefulWidget {
   const UserSelfProfileScreen({super.key});
@@ -34,8 +34,7 @@ class _UserSelfProfileScreenState extends State<UserSelfProfileScreen> {
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Column(children: [
-            ProfileCard(),
-            ProfilePostGrid(),
+            Text('ProfilePage'),
           ]),
         ),
       ),

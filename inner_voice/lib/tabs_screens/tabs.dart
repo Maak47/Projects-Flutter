@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:inner_voice/screens/notifications.dart';
-import 'package:inner_voice/screens/post_creation.dart';
-import 'package:inner_voice/screens/search.dart';
-import 'package:inner_voice/screens/user_self_profile.dart';
 
-import './home.dart';
+import './screens/notifications.dart';
+import './screens/post_creation.dart';
+import './screens/search.dart';
+import './screens/user_self_profile.dart';
+import './screens/home.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({super.key});

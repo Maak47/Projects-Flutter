@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import './new_user_form.dart';
 
 final _firebase = FirebaseAuth.instance;
 
@@ -16,9 +19,15 @@ class _AuthScreenState extends State<AuthScreen> {
   final _form = GlobalKey<FormState>();
   var _email = '';
   var _password = '';
+  var _passwordController = TextEditingController();
   var _isLogin = true;
   var _passwordVisibility = true;
   String? _errorMessage = '';
+
+  void createProfile() async {
+    await Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (ctx) => const NewUserFormScreen()));
+  }
 
   void _submit() async {
     final isValid = _form.currentState!.validate();
@@ -38,19 +47,20 @@ class _AuthScreenState extends State<AuthScreen> {
           // final userCredentials =
           await _firebase.createUserWithEmailAndPassword(
               email: _email, password: _password);
+          createProfile();
           // print(userCredentials);
         }
       } on FirebaseAuthException catch (error) {
         if (error.code == 'email-already-in-use') {
           //..
         }
-        _errorMessage = _errorMessage;
-        showSnackBar();
+        _errorMessage = error.message;
+        viewSnackBar();
       }
     }
   }
 
-  void showSnackBar() {
+  void viewSnackBar() {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -123,9 +133,13 @@ class _AuthScreenState extends State<AuthScreen> {
                               hintText: 'Enter Password',
                               border: InputBorder.none,
                             ),
-                            keyboardType: TextInputType.emailAddress,
+                            textInputAction: !_isLogin
+                                ? TextInputAction.next
+                                : TextInputAction.done,
+                            keyboardType: TextInputType.visiblePassword,
                             obscureText: _passwordVisibility,
                             autocorrect: false,
+                            controller: _passwordController,
                             validator: (value) {
                               if (value == null ||
                                   value.trim().isEmpty ||
@@ -137,6 +151,37 @@ class _AuthScreenState extends State<AuthScreen> {
                             onSaved: (value) {
                               _password = value!;
                             }),
+                        if (!_isLogin)
+                          TextFormField(
+                              decoration: InputDecoration(
+                                suffixIcon: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _passwordVisibility =
+                                            !_passwordVisibility;
+                                      });
+                                    },
+                                    icon: Icon((_passwordVisibility)
+                                        ? Icons.visibility_off
+                                        : Icons.visibility)),
+                                label: const Text('Confirm Password'),
+                                hintText: 'Repeat Password',
+                                border: InputBorder.none,
+                              ),
+                              keyboardType: TextInputType.visiblePassword,
+                              obscureText: _passwordVisibility,
+                              autocorrect: false,
+                              validator: (value) {
+                                if (value == null ||
+                                    value.trim().isEmpty ||
+                                    value != _passwordController.text) {
+                                  return 'Password Invalid, Please type again.';
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                _password = value!;
+                              }),
                       ],
                     ),
                   ),
@@ -169,7 +214,9 @@ class _AuthScreenState extends State<AuthScreen> {
                 height: 20,
               ),
               ElevatedButton(
-                onPressed: _submit,
+                onPressed: () {
+                  _submit();
+                },
                 child: Text(
                   (_isLogin) ? 'Log In' : 'Sign Up',
                 ),
