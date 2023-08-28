@@ -24,6 +24,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'InnerVoice',
       theme: ThemeData(
+        textTheme:
+            TextTheme(titleMedium: TextStyle(fontWeight: FontWeight.bold)),
         fontFamily: 'CC-Single-Bound',
         colorScheme: const ColorScheme.dark(
             background: Colors.black,
@@ -40,7 +42,7 @@ class MyApp extends StatelessWidget {
           if (snapshot.hasData) {
             return const TabScreen();
           }
-          return const AuthScreen();
+          return AuthScreen();
         },
       ),
     );

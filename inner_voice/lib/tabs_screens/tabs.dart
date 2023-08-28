@@ -63,12 +63,12 @@ class _TabScreenState extends State<TabScreen> {
             ],
           ),
         ),
-        body: const <Widget>[
-          HomeScreen(),
-          SearchScreen(),
+        body: <Widget>[
+          const HomeScreen(),
+          const SearchScreen(),
           PostCreationScreen(),
-          NotificationsScreen(),
-          UserSelfProfileScreen(),
+          const NotificationsScreen(),
+          const UserSelfProfileScreen(),
         ][currentPageIndex]);
   }
 }
