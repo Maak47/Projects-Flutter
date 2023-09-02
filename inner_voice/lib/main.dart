@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           if (snapshot.hasData) {
             return const TabScreen();
           }
-          return AuthScreen();
+          return const AuthScreen();
         },
       ),
     );

@@ -1,66 +1,79 @@
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:google_sign_in/google_sign_in.dart';
-import 'create_profile.dart';
+import './create_profile.dart';
 
 final _firebase = FirebaseAuth.instance;
 
 class AuthScreen extends StatefulWidget {
+  const AuthScreen({super.key});
+
   @override
   State<AuthScreen> createState() => _AuthScreenState();
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final _passwordController = TextEditingController();
+  final _form = GlobalKey<FormState>();
+  var _email = '';
+  var _password = '';
+  var _passwordController = TextEditingController();
   var _isLogin = true;
   var _passwordVisibility = true;
-  var _password;
-  var _email;
-  String? _errorMessage;
+  String? _errorMessage = '';
 
-  void _navigateToCreateProfilePage() {
-    Navigator.of(context).pushReplacement(
+  void createProfile() async {
+    await Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (ctx) => CreateProfileScreen()));
   }
 
   void _submit() async {
-    if (!_formKey.currentState!.validate()) return;
+    final isValid = _form.currentState!.validate();
 
-    _formKey.currentState!.save();
+    if (!isValid) {
+      return;
+    }
+    if (isValid) {
+      _form.currentState!.save();
+      try {
+        if (_isLogin) {
+          // final userCredentials =
+          await _firebase.signInWithEmailAndPassword(
+              email: _email, password: _password);
 
-    try {
-      if (_isLogin) {
-        final currentUserDoc = FirebaseFirestore.instance
-            .collection('users')
-            .doc(_firebase.currentUser!.uid);
-        final currentUserDocSnapshot = await currentUserDoc.get();
-
-        if (!currentUserDocSnapshot.exists) {
-          _navigateToCreateProfilePage();
-          return;
+          // print(userCredentials);
+          if (_firebase.currentUser!.uid !=
+              FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(_firebase.currentUser!.uid)
+                  .id) {
+            createProfile();
+          }
+        } else {
+          // final userCredentials =
+          await _firebase.createUserWithEmailAndPassword(
+              email: _email, password: _password);
+          createProfile();
+          // print(userCredentials);
         }
-
-        await _firebase.signInWithEmailAndPassword(
-            email: _email, password: _password);
-      } else {
-        await _firebase.createUserWithEmailAndPassword(
-            email: _email, password: _password);
-        _navigateToCreateProfilePage();
+      } on FirebaseAuthException catch (error) {
+        if (error.code == 'email-already-in-use') {
+          //..
+        }
+        _errorMessage = error.message;
+        viewSnackBar();
       }
-    } on FirebaseAuthException catch (error) {
-      _errorMessage = error.message;
-      _viewSnackBar();
     }
   }
 
-  void _viewSnackBar() {
+  void viewSnackBar() {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Center(
-          child: Text(_errorMessage ?? 'Authentication Failed'),
+          child: Text(_errorMessage ?? 'Authenticaton Failed'),
         ),
       ),
     );
@@ -88,7 +101,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Form(
-                    key: _formKey,
+                    key: _form,
                     child: Column(
                       children: [
                         TextFormField(
@@ -238,14 +251,19 @@ class _AuthScreenState extends State<AuthScreen> {
 }
 
 Future<UserCredential> signInWithGoogle() async {
+  // Trigger the authentication flow
   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+  // Obtain the auth details from the request
   final GoogleSignInAuthentication? googleAuth =
       await googleUser?.authentication;
 
+  // Create a new credential
   final credential = GoogleAuthProvider.credential(
     accessToken: googleAuth?.accessToken,
     idToken: googleAuth?.idToken,
   );
 
+  // Once signed in, return the UserCredential
   return await _firebase.signInWithCredential(credential);
 }
