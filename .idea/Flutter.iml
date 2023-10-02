@@ -2,8 +2,23 @@
 <module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/scribbles/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/scribbles/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/scribbles/build" />
+      <excludeFolder url="file://$MODULE_DIR$/inner_voice/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/inner_voice/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/inner_voice/build" />
+      <excludeFolder url="file://$MODULE_DIR$/random_square_art/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/random_square_art/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/random_square_art/build" />
+      <excludeFolder url="file://$MODULE_DIR$/new_app/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/new_app/build" />
+      <excludeFolder url="file://$MODULE_DIR$/new_app/.pub" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Dart SDK" level="project" />
+    <orderEntry type="library" name="Dart Packages" level="project" />
   </component>
 </module>
