@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:inner_voice/resources/auth_methods.dart';
 import 'package:inner_voice/responsive/mobile_layout.dart';
-import 'package:inner_voice/utilities/utils.dart';
 
 import 'auth.dart';
 

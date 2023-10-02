@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
 class QuoteCategories extends StatefulWidget {
@@ -40,7 +42,7 @@ class _QuoteCategoriesState extends State<QuoteCategories> {
     return SizedBox(
       height: 38,
       child: ListView.separated(
-          separatorBuilder: (context, index) => SizedBox(
+          separatorBuilder: (context, index) => const SizedBox(
                 width: 3,
               ),
           shrinkWrap: true,
@@ -57,7 +59,7 @@ class _QuoteCategoriesState extends State<QuoteCategories> {
                 child: Container(
                   // width: 50,
                   alignment: Alignment.center,
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: selectedCategoryIndex == index
