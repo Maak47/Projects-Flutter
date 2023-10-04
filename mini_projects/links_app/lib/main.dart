@@ -17,9 +17,28 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+          inputDecorationTheme: InputDecorationTheme(
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.all(10),
+            floatingLabelBehavior: FloatingLabelBehavior.never,
+          ),
+          colorScheme: ColorScheme.fromSeed(
+              background: Color.fromRGBO(232, 236, 226, 1),
+              seedColor: Color.fromARGB(255, 142, 198, 63)),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 142, 198, 63),
+                foregroundColor: Colors.white,
+                elevation: 20),
+          ),
+          appBarTheme: AppBarTheme(
+            elevation: 5,
+            foregroundColor: Colors.white,
+            backgroundColor: Color.fromARGB(255, 142, 198, 63),
+            centerTitle: true,
+            titleTextStyle: TextStyle(color: Colors.white, fontSize: 25),
+          ),
+          useMaterial3: true),
       home: AuthenticationWrapper(),
     );
   }

@@ -16,6 +16,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: NavigationBar(
+        elevation: 10,
         onDestinationSelected: (int index) {
           setState(() {
             currentPageIndex = index;

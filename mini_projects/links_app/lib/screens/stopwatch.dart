@@ -14,6 +14,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
 
   @override
   void initState() {
+    timer = Timer(Duration.zero, () {});
     super.initState();
   }
 

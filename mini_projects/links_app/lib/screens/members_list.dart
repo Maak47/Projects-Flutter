@@ -30,7 +30,10 @@ class _MembersListScreenState extends State<MembersListScreen> {
     // Create a new member and add it to the dummyMembers list
     final newMember =
         Member(username: username, email: email, password: password);
-    dummyMembers.add(newMember);
+
+    setState(() {
+      dummyMembers.add(newMember);
+    });
 
     // Clear input fields
     _usernameController.clear();
@@ -70,7 +73,7 @@ class _MembersListScreenState extends State<MembersListScreen> {
           final member = dummyMembers[index];
           return MemberCard(
             member: member,
-            onDelete: () {},
+            onDelete: () => _deleteMember(index),
             index: index,
           );
         },
@@ -136,6 +139,7 @@ class MemberCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 20,
       margin: EdgeInsets.all(8),
       child: ListTile(
         leading: CircleAvatar(

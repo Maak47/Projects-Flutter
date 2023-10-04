@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
+import 'package:links_app/screens/bottom_nav_bar.dart';
 import 'package:links_app/screens/home.dart';
 import '../models/user.dart'; // Import the Member class and dummyMembers list
 
@@ -48,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (authenticatedMember != null) {
         // Authentication successful, navigate to the home screen
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => HomeScreen(),
+          builder: (context) => BottomNavBarScreen(),
         ));
       } else {
         // Authentication failed, show an error message
@@ -64,9 +65,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -75,22 +73,57 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              TextFormField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(labelText: 'Email'),
-                validator: _validateEmail,
-              ),
-              TextFormField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: InputDecoration(labelText: 'Password'),
-                validator: _validatePassword,
+              Container(
+                height: 50,
+                width: 100,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    // border: Border.all(width: 1),
+                    borderRadius: BorderRadius.circular(25)),
+                child: TextFormField(
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 1),
+                        borderRadius: BorderRadius.circular(25)),
+                    contentPadding: EdgeInsets.all(15),
+                    labelText: 'Email',
+                  ),
+                  validator: _validateEmail,
+                ),
               ),
               SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _login,
-                child: Text('Login'),
+              Container(
+                height: 50,
+                width: 100,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    // border: Border.all(width: 1),
+                    borderRadius: BorderRadius.circular(25)),
+                child: TextFormField(
+                  controller: _passwordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 1),
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      labelText: 'Password',
+                      contentPadding: EdgeInsets.all(15)),
+                  validator: _validatePassword,
+                ),
+              ),
+              SizedBox(height: 20),
+              SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: _login,
+                  child: Text(
+                    'Login',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ),
               ),
             ],
           ),

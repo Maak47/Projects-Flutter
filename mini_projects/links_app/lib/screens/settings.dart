@@ -10,59 +10,111 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Settings'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              'App Usage Instructions',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Welcome to our Flutter application! This app is designed to help you manage members, time with a stopwatch, and access recommended sites easily. Here\'s how to use it:',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            Text(
-              '1. Home Tab',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 5),
-            Text(
-              '- The Home tab is your main dashboard, where you can access various features.',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 5),
-            Text(
-              'Members List:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 5),
-            Text(
-              '- Click on "Members List" to view a list of members.',
-              style: TextStyle(fontSize: 16),
-            ),
-            // Add more instructions for each feature as needed
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                'App Usage Instructions',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Welcome to our Flutter application! This app is designed to help you manage members, time with a stopwatch, and access recommended sites easily. Here\'s how to use it:',
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 10),
+              Text(
+                '1. Home Tab',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 5),
+              Text(
+                '- The Home tab is your main dashboard, where you can access various features.',
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 5),
+              Text(
+                'A. Members List:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+              SizedBox(height: 5),
+              Text(
+                '''
+    - View a list of members.
+    - Add Users with the FloatingActionButton,
+    - Delete Users with the Delete Icon.
+                ''',
+                style: TextStyle(fontSize: 14),
+              ),
+              Text(
+                'B. StopWatch:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+              SizedBox(height: 5),
+              Text(
+                '''
+    - This is a Timer based StopWatch.
+    - Press Start to start the timer,
+    - Press Stop to Stop the timer,
+    - Press Reset to reset the timer.
+                ''',
+                style: TextStyle(fontSize: 14),
+              ),
 
-            SizedBox(height: 20),
-            Text(
-              '2. Settings Tab',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 5),
-            Text(
-              '- Click on the "Settings" tab to access app settings and information.',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () => _logout(context),
-              child: Text('Logout'),
-            ),
-          ],
+              Text(
+                'C. Recommended Sites:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+              SizedBox(height: 5),
+              Text(
+                '''
+    - This is the Recommended Sites page.
+    - Press on the individual tile to open up the website.
+    - Press the heart-icon to mark the site as Favourite.
+                ''',
+                style: TextStyle(fontSize: 14),
+              ),
+
+              Text(
+                'D. Favourites:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+              SizedBox(height: 5),
+              Text(
+                '''
+    - This is the Favourites page.
+    - All the sites marked as favourite in, 
+      the Recommended sites page as displayed here.
+    - Press on the individual tile to open up the website.
+                ''',
+                style: TextStyle(fontSize: 14),
+              ),
+
+              // Add more instructions for each feature as needed
+
+              SizedBox(height: 20),
+              Text(
+                '2. Settings Tab',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 5),
+              Text(
+                '- Click on the "Settings" tab to access app settings and information.',
+                style: TextStyle(fontSize: 14),
+              ),
+              SizedBox(height: 10),
+            ],
+          ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _logout(context);
+        },
+        child: Icon(Icons.logout),
       ),
     );
   }
