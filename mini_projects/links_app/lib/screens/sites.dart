@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:links_app/screens/favorites.dart';
 import 'package:url_launcher/link.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../models/site.dart';
 
