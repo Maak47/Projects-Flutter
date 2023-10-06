@@ -10,6 +10,4 @@ class Member {
 
 List<Member> dummyMembers = [
   Member(username: 'User1', email: 'user1@example.com', password: 'password1'),
-  Member(username: 'User2', email: 'user2@example.com', password: 'password2'),
-  Member(username: 'User3', email: 'user3@example.com', password: 'password3'),
 ];
