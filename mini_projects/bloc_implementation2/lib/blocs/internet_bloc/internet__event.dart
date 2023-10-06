@@ -1,4 +1,5 @@
-part of 'internet__bloc.dart';
+sealed class InternetEvent {}
 
-@immutable
-abstract class InternetEvent {}
+class InternetLostEvent extends InternetEvent {}
+
+class InternetGainedEvent extends InternetEvent {}

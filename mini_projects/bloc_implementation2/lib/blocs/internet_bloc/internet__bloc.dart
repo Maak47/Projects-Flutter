@@ -1,10 +1,6 @@
-import 'dart:async';
-
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
-
-part 'internet__event.dart';
-part 'internet__state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import './internet__event.dart';
+import './internet__state.dart';
 
 class InternetBloc extends Bloc<InternetEvent, InternetState> {
   InternetBloc() : super(InternetInitial()) {

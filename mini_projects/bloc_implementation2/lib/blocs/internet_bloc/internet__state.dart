@@ -1,6 +1,9 @@
-part of 'internet__bloc.dart';
+sealed class InternetState {}
 
-@immutable
-abstract class InternetState {}
+class InternetInitialedState extends InternetState {}
 
 class InternetInitial extends InternetState {}
+
+class InternetLostState extends InternetState {}
+
+class InternetGainedState extends InternetState {}
