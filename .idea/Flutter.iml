@@ -15,6 +15,9 @@
       <excludeFolder url="file://$MODULE_DIR$/new_app/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/new_app/build" />
       <excludeFolder url="file://$MODULE_DIR$/new_app/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_implementation2/build" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_implementation2/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_implementation2/.pub" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
