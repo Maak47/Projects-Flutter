@@ -18,6 +18,9 @@
       <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_implementation2/build" />
       <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_implementation2/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_implementation2/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_form_validation/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_form_validation/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_form_validation/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
