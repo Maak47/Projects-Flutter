@@ -4,7 +4,7 @@ import './stopwatch.dart';
 import './sites.dart';
 import './favorites.dart';
 
-class HomeScreen extends StatelessWidget {
+classVerificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

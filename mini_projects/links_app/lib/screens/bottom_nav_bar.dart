@@ -36,7 +36,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
         ],
       ),
       body: <Widget>[
-        HomeScreen(),
+        VerificationScreen(),
         SettingsScreen(),
       ][currentPageIndex],
     );
