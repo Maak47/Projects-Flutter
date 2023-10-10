@@ -1,8 +1,12 @@
 import 'package:bloc_phone_authentication/screen/verify_phone_number.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../cubits/auth_cubit/auth_cubit.dart';
+import '../cubits/auth_cubit/auth_state.dart';
 
 class SignInScreen extends StatelessWidget {
-  const SignInScreen({super.key});
+  TextEditingController phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +18,7 @@ class SignInScreen extends StatelessWidget {
         child: ListView(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 vertical: 20,
                 horizontal: 30,
               ),
@@ -22,26 +26,34 @@ class SignInScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Enter Phone number',
                       border: OutlineInputBorder(),
                       counterText: '',
                     ),
                     maxLength: 10,
                     keyboardType: TextInputType.number,
+                    controller: phoneController,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => VerificationScreen()));
-                      },
-                      child: Text('Sign In'),
-                    ),
+                  BlocConsumer<AuthCubit, AuthState>(
+                    listener: (context, state) {
+                      // TODO: implement listener
+                    },
+                    builder: (context, state) {
+                      return SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            BlocProvider.of<AuthCubit>(context)
+                                .sendOTP(phoneController.text);
+                          },
+                          child: const Text('Sign In'),
+                        ),
+                      );
+                    },
                   )
                 ],
               ),
