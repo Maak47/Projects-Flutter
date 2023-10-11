@@ -4,7 +4,16 @@ import './auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  AuthCubit() : super(AuthInitial());
+  AuthCubit() : super(AuthInitial()){
+    User? currentUser = _auth.currentUser;
+    if(currentUser != null){
+      emit(AuthLoggedInState(currentUser));
+    }
+    else {
+      emit(AuthLoggedOutState());
+    }
+  }
+
   String? _verificationId;
   void sendOTP(String phoneNumber) async {
     await _auth.verifyPhoneNumber(
@@ -41,5 +50,10 @@ class AuthCubit extends Cubit<AuthState> {
     } on FirebaseAuthException catch (ex) {
       emit(AuthErrorState(ex.message.toString()));
     }
+
+  }
+  void logOut() async {
+    await _auth.signOut();
+    emit(AuthLoggedOutState());
   }
 }

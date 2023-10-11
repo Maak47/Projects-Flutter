@@ -40,7 +40,7 @@ class VerificationScreen extends StatelessWidget {
                   ),
                   BlocConsumer<AuthCubit, AuthState>(
                     listener: (context, state) {
-                      if (state is AuthCodeSentState) {
+                      if (state is AuthLoggedInState) {
                         Navigator.of(context)
                             .popUntil((route) => route.isFirst);
                         Navigator.pushReplacement(
@@ -51,7 +51,7 @@ class VerificationScreen extends StatelessWidget {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(state.error),
                           backgroundColor: Colors.red,
-                          duration: const Duration(milliseconds: 600),
+                          duration: const Duration(milliseconds: 2000),
                         ));
                       }
                     },
@@ -66,9 +66,9 @@ class VerificationScreen extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         child: ElevatedButton(
                           onPressed: () {
-                            final otp = otpController.text;
+
                             BlocProvider.of<AuthCubit>(context)
-                                .verifyOTP(otp);
+                                .verifyOTP(otpController.text);
                           },
                           child: const Text('Verify'),
                         ),

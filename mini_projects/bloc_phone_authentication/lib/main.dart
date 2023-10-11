@@ -1,5 +1,7 @@
 import 'package:bloc_phone_authentication/cubits/auth_cubit/auth_cubit.dart';
+import 'package:bloc_phone_authentication/cubits/auth_cubit/auth_state.dart';
 import 'package:bloc_phone_authentication/firebase_options.dart';
+import 'package:bloc_phone_authentication/screen/home.dart';
 import 'package:bloc_phone_authentication/screen/sign_in.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -22,11 +24,25 @@ class MyApp extends StatelessWidget {
       create: (context) => AuthCubit(),
       child: MaterialApp(
         title: 'Flutter Demo',
-        theme: ThemeData(appBarTheme: const AppBarTheme(backgroundColor: Colors.cyan),
+        theme: ThemeData(
+          appBarTheme: const AppBarTheme(backgroundColor: Colors.cyan),
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),
           useMaterial3: true,
         ),
-        home: SignInScreen(),
+        home: BlocBuilder<AuthCubit, AuthState>(
+          buildWhen: (previous, current) {
+            return previous is AuthInitial;
+          },
+          builder: (context, state) {
+            if(state is AuthLoggedInState){
+              return HomeScreen();
+
+            } else if(state is AuthLoggedOutState){
+              return SignInScreen();
+            }else {
+              return Scaffold();
+            }},
+        ),
       ),
     );
   }
