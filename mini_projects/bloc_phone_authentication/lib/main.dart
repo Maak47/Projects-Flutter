@@ -8,15 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp(
-      options: const FirebaseOptions(
-          apiKey: "AIzaSyCvuQTtLqX3mZKZ2t2OPP--qYc7fnTMzG4",
-          authDomain: "bloc-implementation0.firebaseapp.com",
-          projectId: "bloc-implementation0",
-          storageBucket: "bloc-implementation0.appspot.com",
-          messagingSenderId: "1029139894402",
-          appId: "1:1029139894402:web:310449dca6bc5c6e1b649b",
-          measurementId: "G-DTK9XVCQQF"));
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -30,7 +22,7 @@ class MyApp extends StatelessWidget {
       create: (context) => AuthCubit(),
       child: MaterialApp(
         title: 'Flutter Demo',
-        theme: ThemeData(
+        theme: ThemeData(appBarTheme: const AppBarTheme(backgroundColor: Colors.cyan),
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),
           useMaterial3: true,
         ),

@@ -6,7 +6,8 @@ import '../cubits/auth_cubit/auth_cubit.dart';
 import '../cubits/auth_cubit/auth_state.dart';
 
 class VerificationScreen extends StatelessWidget {
-  TextEditingController otpController = TextEditingController();
+  VerificationScreen({super.key});
+  final TextEditingController otpController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +18,7 @@ class VerificationScreen extends StatelessWidget {
         child: ListView(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 horizontal: 30,
                 vertical: 20,
               ),
@@ -26,7 +27,7 @@ class VerificationScreen extends StatelessWidget {
                 children: [
                   TextField(
                     controller: otpController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Enter 6-digit OTP',
                       border: OutlineInputBorder(),
                       counterText: '',
@@ -34,22 +35,42 @@ class VerificationScreen extends StatelessWidget {
                     maxLength: 10,
                     keyboardType: TextInputType.number,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   BlocConsumer<AuthCubit, AuthState>(
                     listener: (context, state) {
-                      // TODO: implement listener
+                      if (state is AuthCodeSentState) {
+                        Navigator.of(context)
+                            .popUntil((route) => route.isFirst);
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomeScreen()));
+                      } else if (state is AuthErrorState) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(state.error),
+                          backgroundColor: Colors.red,
+                          duration: const Duration(milliseconds: 600),
+                        ));
+                      }
                     },
                     builder: (context, state) {
+                      if (state is AuthLoadingState) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+
                       return SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => HomeScreen()));
+                            final otp = otpController.text;
+                            BlocProvider.of<AuthCubit>(context)
+                                .verifyOTP(otp);
                           },
-                          child: Text('Verify'),
+                          child: const Text('Verify'),
                         ),
                       );
                     },
