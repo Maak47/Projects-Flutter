@@ -14,10 +14,14 @@ class Routes {
                   child: const FirstScreen(),
                 ));
       case '/second':
+        Map<String, dynamic> arguments =
+            settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
                   create: (context) => SecondCubit(),
-                  child: const SecondScreen(),
+                  child: SecondScreen(
+                    title: arguments['title'],
+                  ),
                 ));
       case '/third':
         return MaterialPageRoute(

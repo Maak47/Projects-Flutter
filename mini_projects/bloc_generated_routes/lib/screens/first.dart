@@ -16,7 +16,8 @@ class FirstScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).pushNamed('/second');
+              Navigator.of(context)
+                  .pushNamed('/second', arguments: {'title': 'Dynamic title'});
             },
             icon: const Icon(Icons.arrow_forward),
           ),
