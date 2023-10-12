@@ -1,6 +1,3 @@
-import 'package:bloc_generated_routes/cubits/first_cubit.dart';
-import 'package:bloc_generated_routes/cubits/third_cubit.dart';
-import 'package:bloc_generated_routes/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,17 +12,12 @@ class SecondScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          'First Screen',
+          'Second Screen',
         ),
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => BlocProvider(
-                  create: (context) => ThirdCubit(),
-                  child: const ThirdScreen(),
-                ),
-              ));
+              Navigator.of(context).pushNamed('/third');
             },
             icon: const Icon(Icons.arrow_forward),
           ),
@@ -43,7 +35,7 @@ class SecondScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          BlocProvider.of<FirstCubit>(context).increment();
+          BlocProvider.of<SecondCubit>(context).increment();
         },
         child: const Icon(Icons.add),
       ),
