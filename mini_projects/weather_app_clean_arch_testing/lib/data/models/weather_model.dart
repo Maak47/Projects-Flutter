@@ -1,0 +1,47 @@
+import 'package:weather_app_clean_arch_testing/domain/entities/weather.dart';
+
+class WeatherModel extends WeatherEntity {
+  const WeatherModel({
+    required String cityName,
+    required String description,
+    required String main,
+    required String iconCode,
+    required double temperature,
+    required int humidity,
+    required int pressure,
+  }) : super(
+          cityName: cityName,
+          description: description,
+          humidity: humidity,
+          iconCode: iconCode,
+          main: main,
+          pressure: pressure,
+          temperature: temperature,
+        );
+
+  factory WeatherModel.fromJson(Map<String, dynamic> json) => WeatherModel(
+        cityName: json['name'],
+        description: json['weather'][0]['description'],
+        main: json['weather'][0]['main'],
+        iconCode: json['weather'][0]['icon'],
+        temperature: json['main']['temp'],
+        humidity: json['main']['humidity'],
+        pressure: json['main']['pressure'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        'weather': [
+          {
+            'main': main,
+            'description': description,
+            'icon': iconCode,
+          },
+        ],
+        'main': {
+          'temp': temperature,
+          'pressure': pressure,
+          'humidity': humidity,
+        },
+        'name': cityName,
+      };
+}
