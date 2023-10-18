@@ -8,11 +8,13 @@ import '../../helpers/test_helper.mocks.dart';
 
 void main() {
   GetCurrentWeatherUseCase getCurrentWeatherUseCase;
-  MockWeatherRepository? mockWeatherRepository;
+  MockWeatherRepository mockWeatherRepository;
+  mockWeatherRepository = MockWeatherRepository();
+  getCurrentWeatherUseCase = GetCurrentWeatherUseCase(mockWeatherRepository);
 
   setUp(() {
-    mockWeatherRepository = MockWeatherRepository();
-    getCurrentWeatherUseCase = GetCurrentWeatherUseCase(mockWeatherRepository!);
+    mockWeatherRepository;
+    getCurrentWeatherUseCase;
   });
   const testWeatherDetail = WeatherEntity(
     cityName: 'Thikri',
@@ -26,10 +28,13 @@ void main() {
   const testCityName = 'Thikri';
   test('should get current weather detail from the repository', () async {
     //arrange
-    when(mockWeatherRepository!.getCurrentWeather(testCityName))
+    when(mockWeatherRepository.getCurrentWeather(testCityName))
         .thenAnswer((_) async => const Right(testWeatherDetail));
+
     // act
+    final result = await getCurrentWeatherUseCase.execute(testCityName);
 
     // assert
+    expect(result, const Right(testWeatherDetail));
   });
 }
