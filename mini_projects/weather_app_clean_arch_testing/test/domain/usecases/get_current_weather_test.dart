@@ -7,27 +7,28 @@ import 'package:weather_app_clean_arch_testing/domain/usecases/get_current_weath
 import '../../helpers/test_helper.mocks.dart';
 
 void main() {
-  GetCurrentWeatherUseCase getCurrentWeatherUseCase;
-  MockWeatherRepository mockWeatherRepository;
-  mockWeatherRepository = MockWeatherRepository();
-  getCurrentWeatherUseCase = GetCurrentWeatherUseCase(mockWeatherRepository);
+  late GetCurrentWeatherUseCase getCurrentWeatherUseCase;
+  late MockWeatherRepository mockWeatherRepository;
 
   setUp(() {
-    mockWeatherRepository;
-    getCurrentWeatherUseCase;
+    mockWeatherRepository = MockWeatherRepository();
+    getCurrentWeatherUseCase = GetCurrentWeatherUseCase(mockWeatherRepository);
   });
+
   const testWeatherDetail = WeatherEntity(
-    cityName: 'Thikri',
-    main: 'sun',
-    description: 'suuny day',
-    iconCode: '0x2',
-    temperature: 421,
-    pressure: 51,
-    humidity: 23,
+    cityName: 'New York',
+    main: 'Clouds',
+    description: 'few clouds',
+    iconCode: '02d',
+    temperature: 302.28,
+    pressure: 1009,
+    humidity: 70,
   );
-  const testCityName = 'Thikri';
+
+  const testCityName = 'New York';
+
   test('should get current weather detail from the repository', () async {
-    //arrange
+    // arrange
     when(mockWeatherRepository.getCurrentWeather(testCityName))
         .thenAnswer((_) async => const Right(testWeatherDetail));
 
