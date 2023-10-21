@@ -16,16 +16,16 @@ void main() {
   });
 
   const testWeatherDetail = WeatherEntity(
-    cityName: 'New York',
+    temperature: 285.55,
+    humidity: 83,
+    pressure: 1000,
+    iconCode: '04d',
+    cityName: 'London',
     main: 'Clouds',
-    description: 'few clouds',
-    iconCode: '02d',
-    temperature: 302.28,
-    pressure: 1009,
-    humidity: 70,
+    description: 'overcast clouds',
   );
 
-  const testCityName = 'New York';
+  const testCityName = 'London';
 
   test('should get current weather detail from the repository', () async {
     // arrange
