@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:weather_app_clean_arch_testing/domain/entities/weather.dart';
+
+import '../../domain/entities/weather.dart';
 
 abstract class WeatherState extends Equatable {
   const WeatherState();
@@ -23,6 +24,7 @@ class WeatherLoaded extends WeatherState {
 
 class WeatherLoadFailure extends WeatherState {
   final String message;
+
   const WeatherLoadFailure(this.message);
 
   @override

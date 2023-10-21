@@ -69,14 +69,14 @@ void main() {
           await weatherRepositoryImpl.getCurrentWeather(testCityName);
       //assert
 
-      expect(result, equals(Left(const ServerFailure('An error has occured'))));
+      expect(result, equals(const Left(ServerFailure('An error has occured'))));
     });
 
     test('should return connection failure when the device has no internet',
         () async {
       //arrange
       when(mockWeatherRemoteDataSource.getCurrentWeather(testCityName))
-          .thenThrow(SocketException('Failed to connect to the network'));
+          .thenThrow(const SocketException('Failed to connect to the network'));
 
       //act
       final result =
@@ -85,8 +85,8 @@ void main() {
 
       expect(
           result,
-          equals(Left(
-              const ConnectionFailure('Failed to connect to the network'))));
+          equals(const Left(
+              ConnectionFailure('Failed to connect to the network'))));
     });
   });
 }
