@@ -38,7 +38,7 @@ dependencies:
   retrofit:
   floor:
   freezed_annotation:
-  json_annotation: 
+  json_annotation:
 
 
   # The following adds the Cupertino Icons font to your application.
