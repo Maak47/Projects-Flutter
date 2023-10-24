@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "100481014343",
+    "project_id": "innervoice11",
+    "storage_bucket": "innervoice11.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100481014343:android:681d9ee544f8fa8871ef62",
+        "android_client_info": {
+          "package_name": "com.example.inner_voice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "100481014343-rts573becqj54udvl8vs79gfr0krabla.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2leax8Rz3qqc6CVRFBZEBlEnW5xgyXSM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "100481014343-eahe7f9uh177u9qo3fdjavnvarsvh056.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "100481014343-csveet39p1m4ft2u4i21cpm8sadtr62d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.scribbles"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
