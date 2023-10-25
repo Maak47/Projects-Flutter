@@ -21,6 +21,27 @@
       <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_form_validation/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_form_validation/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_form_validation/build" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/links_app/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/links_app/build" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/links_app/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_implementation/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_implementation/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_implementation/build" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_phone_authentication/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_phone_authentication/build" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_phone_authentication/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_generated_routes/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_generated_routes/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_generated_routes/build" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_dio_api_handling/build" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_dio_api_handling/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/bloc_dio_api_handling/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/news_app_clean_architecture/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/news_app_clean_architecture/build" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/news_app_clean_architecture/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/text_editor/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/text_editor/build" />
+      <excludeFolder url="file://$MODULE_DIR$/mini_projects/text_editor/.pub" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
