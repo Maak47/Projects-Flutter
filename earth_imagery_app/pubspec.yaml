@@ -39,7 +39,6 @@ dependencies:
   appwrite: ^11.0.1
   google_fonts: ^6.1.0
   intl: ^0.18.1
-  flutter_native_timezone: ^2.0.0
 
 dev_dependencies:
   flutter_test:
