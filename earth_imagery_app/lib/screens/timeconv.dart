@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class TimeConverter extends StatefulWidget {
+  const TimeConverter({super.key});
   @override
   _TimeConverterState createState() => _TimeConverterState();
 }
@@ -37,12 +38,14 @@ class _TimeConverterState extends State<TimeConverter> {
     switch (timeZone) {
       case 'UTC':
         return 0;
-      case 'America/New_York':
-        return -5;
-      case 'Europe/London':
+      case 'WIB':
+        return 7;
+      case 'London':
         return 0;
-      case 'Asia/Tokyo':
+      case 'WIT':
         return 9;
+      case 'WITA':
+        return 8;
       // Add more time zones as needed
       default:
         return 0;
@@ -81,9 +84,10 @@ class _TimeConverterState extends State<TimeConverter> {
               },
               items: [
                 'UTC',
-                'America/New_York',
-                'Europe/London',
-                'Asia/Tokyo',
+                'WIB',
+                'London',
+                'WIT',
+                'WITA',
                 // Add more time zones as needed
               ].map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(

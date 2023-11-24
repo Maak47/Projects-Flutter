@@ -18,7 +18,7 @@ class Profile extends StatelessWidget {
         onDrawerItemTap: (page) {
           // Handle navigation to each page
           // Implement the navigation logic based on the selected page
-          print('Navigating to $page');
+
           Navigator.pop(context); // Close the drawer after selection
         },
       ),
