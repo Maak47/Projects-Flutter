@@ -1,4 +1,3 @@
-import 'package:earth_imagery_app/screens/auth.dart';
 import 'package:earth_imagery_app/widgets/bottomnav.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
