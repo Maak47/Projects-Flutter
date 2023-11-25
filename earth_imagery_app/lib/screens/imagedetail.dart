@@ -48,8 +48,8 @@ class DetailPage extends StatelessWidget {
             top: 70,
             right: 10,
             child: Text(
-              "${args['date'].substring(6, 8)}-${args['date'].substring(4, 6)}-${args['date'].substring(0, 4)}",
-              style: TextStyle(fontSize: 18, color: Colors.white),
+              args['date'],
+              style: const TextStyle(fontSize: 18, color: Colors.white),
             ),
           )
         ],

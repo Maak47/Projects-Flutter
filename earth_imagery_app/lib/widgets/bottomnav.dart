@@ -5,7 +5,8 @@ import 'package:earth_imagery_app/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 
 class BottomNav extends StatefulWidget {
-  const BottomNav({super.key});
+  int updateCurrentIndex;
+  BottomNav({super.key, required this.updateCurrentIndex});
 
   @override
   State<BottomNav> createState() => _BottomNavState();
@@ -13,6 +14,13 @@ class BottomNav extends StatefulWidget {
 
 class _BottomNavState extends State<BottomNav> {
   int currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    currentIndex = widget.updateCurrentIndex;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +50,7 @@ class _BottomNavState extends State<BottomNav> {
       body: [
         HomePage(),
         const Impressions(),
-        const Profile(),
+        Profile(),
       ][currentIndex],
     );
   }

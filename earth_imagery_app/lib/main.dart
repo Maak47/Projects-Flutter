@@ -23,7 +23,9 @@ class MyApp extends StatelessWidget {
             // accentColor: Color.fromARGB(255, 84, 59, 130),
             ),
       ),
-      home: const BottomNav(),
+      home: BottomNav(
+        updateCurrentIndex: 0,
+      ),
     );
   }
 }

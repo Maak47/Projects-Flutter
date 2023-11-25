@@ -1,9 +1,11 @@
 import 'package:earth_imagery_app/screens/currencyconv.dart';
+
 import 'package:earth_imagery_app/screens/timeconv.dart';
+import 'package:earth_imagery_app/widgets/bottomnav.dart';
 import 'package:flutter/material.dart';
 
 class EarthVisorDrawer extends StatelessWidget {
-  final Function(String) onDrawerItemTap;
+  final Function(int) onDrawerItemTap;
 
   const EarthVisorDrawer({super.key, required this.onDrawerItemTap});
 
@@ -30,15 +32,28 @@ class EarthVisorDrawer extends StatelessWidget {
           ),
           ListTile(
             title: const Text('Home'),
-            onTap: () => onDrawerItemTap('Home'),
+            onTap: () =>
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => BottomNav(
+                          updateCurrentIndex: 0,
+                        ))),
           ),
           ListTile(
             title: const Text('Impressions'),
-            onTap: () => onDrawerItemTap('Impressions'),
+            onTap: () =>
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => BottomNav(
+                          updateCurrentIndex: 1,
+                        ))),
           ),
           ListTile(
             title: const Text('Profile'),
-            onTap: () => onDrawerItemTap('Profile'),
+            onTap: () => Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                  builder: (context) => BottomNav(
+                        updateCurrentIndex: 2,
+                      )),
+            ),
           ),
           ListTile(
             title: const Text('Time Converter'),
@@ -47,8 +62,8 @@ class EarthVisorDrawer extends StatelessWidget {
           ),
           ListTile(
             title: const Text('Currency Converter'),
-            onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const CurrencyConverter())),
+            onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => CurrencyConverter())),
           ),
         ],
       ),

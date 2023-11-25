@@ -1,5 +1,6 @@
 import 'package:earth_imagery_app/screens/imagedetail.dart';
 import 'package:earth_imagery_app/widgets/drawer.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -30,8 +31,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> fetchEarthImages() async {
     final response = await http.get(
-      Uri.parse(
-          'https://api.nasa.gov/EPIC/api/natural/thumbnails?api_key=27auxknmyhmeGp4qkLBdLswd0UMoE6uP6kmHED3V'),
+      Uri.parse('https://epic.gsfc.nasa.gov/api/enhanced'),
     );
     print(response.body);
     if (response.statusCode == 200) {
@@ -46,12 +46,12 @@ class _HomePageState extends State<HomePage> {
 
           // Constructing the URL with forward slashes
           String imageUrl =
-              'https://epic.gsfc.nasa.gov/archive/natural/' + extractedPart;
+              'https://epic.gsfc.nasa.gov/archive/enhanced/' + extractedPart;
 
           return {
             'image': imageUrl,
             'title': item['caption'],
-            'date': item['identifier'],
+            'date': item['date'],
           };
         }).toList();
       });
@@ -78,6 +78,14 @@ class _HomePageState extends State<HomePage> {
       body: earthImages == null
           ? const Center(child: CircularProgressIndicator())
           : buildEarthImageCarousel(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Launch the specified link when FAB is pressed
+          _launchLink('https://epic.gsfc.nasa.gov/enhanced');
+        },
+        child: Icon(Icons.saved_search_sharp),
+        backgroundColor: const Color.fromARGB(255, 190, 79, 210),
+      ),
     );
   }
 
@@ -200,5 +208,13 @@ class _HomePageState extends State<HomePage> {
         ),
       ],
     );
+  }
+
+  Future<void> _launchLink(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      print('Could not launch $url');
+    }
   }
 }
