@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
           return {
             'image': imageUrl,
             'title': item['caption'],
-            'date': item['date'],
+            'date': item['identifier'],
           };
         }).toList();
       });

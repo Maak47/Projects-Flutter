@@ -1,8 +1,10 @@
+import 'package:earth_imagery_app/authservice.dart';
 import 'package:earth_imagery_app/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatelessWidget {
-  const Profile({super.key});
+  final AuthService _authService = AuthService();
+  Profile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,16 @@ class Profile extends StatelessWidget {
             'User Profile',
           ),
           actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.login_rounded)),
+            IconButton(
+                onPressed: () {
+                  ElevatedButton(
+                    onPressed: () {
+                      _authService.signOut();
+                    },
+                    child: Text('Sign Out'),
+                  );
+                },
+                icon: const Icon(Icons.login_rounded)),
           ]),
       drawer: EarthVisorDrawer(
         onDrawerItemTap: (page) {
