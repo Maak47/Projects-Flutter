@@ -7,11 +7,14 @@ import 'package:travel_app_ca_riverpod_hive/features/trip/domain/entities/trip_e
 import 'package:travel_app_ca_riverpod_hive/features/trip/presentation/screens/main_screen.dart';
 
 Future<void> main() async {
+  // Ensure the Flutter widgets binding is initialized.
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Initialize Hive and open your box.
   await Hive.initFlutter((await getApplicationDocumentsDirectory()).path);
   Hive.registerAdapter(TripModelAdapter());
   await Hive.openBox<TripModel>('trips');
+
   runApp(ProviderScope(child: MyApp()));
 }
 

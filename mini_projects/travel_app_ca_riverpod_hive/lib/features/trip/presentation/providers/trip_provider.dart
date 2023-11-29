@@ -19,6 +19,11 @@ final tripRepositoryProvider = Provider<TripRepository>((ref) {
   return TripRepositoryImpl(localDataSource);
 });
 
+final getTripsProvider = Provider<GetTrips>((ref) {
+  final repository = ref.read(tripRepositoryProvider);
+  return GetTrips(repository);
+});
+
 final addTripProvider = Provider<AddTrip>((ref) {
   final repository = ref.read(tripRepositoryProvider);
   return AddTrip(repository);
@@ -29,11 +34,7 @@ final deleteTripProvider = Provider<DeleteTrip>((ref) {
   return DeleteTrip(repository);
 });
 
-final getTripsProvider = Provider<GetTrips>((ref) {
-  final repository = ref.read(tripRepositoryProvider);
-  return GetTrips(repository);
-});
-
+// This provider will manage fetching trips from the repository.
 final tripListNotifierProvider =
     StateNotifierProvider<TripListNotifier, List<TripEntity>>((ref) {
   final getTrips = ref.read(getTripsProvider);
@@ -50,16 +51,18 @@ class TripListNotifier extends StateNotifier<List<TripEntity>> {
 
   TripListNotifier(this._getTrips, this._addTrip, this._deleteTrip) : super([]);
 
+  // Load trips from the repository and update the state.
+  Future<void> loadTrips() async {
+    final tripsOrFailure = await _getTrips();
+    tripsOrFailure.fold((error) => state = [], (trips) => state = trips);
+  }
+
   Future<void> addNewTrip(TripEntity tripEntity) async {
     await _addTrip(tripEntity);
+    //state = [...state, trip];
   }
 
   Future<void> removeTrip(int tripId) async {
     await _deleteTrip(tripId);
-  }
-
-  Future<void> loadTrips() async {
-    final tripsOrFailure = await _getTrips();
-    return tripsOrFailure.fold((error) => state = [], (trips) => state = trips);
   }
 }

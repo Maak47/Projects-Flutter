@@ -3,11 +3,11 @@ import 'package:travel_app_ca_riverpod_hive/features/trip/domain/entities/trip_e
 import '../repositories/trip_repository.dart';
 
 class AddTrip {
-  final TripRepository tripRepository;
+  final TripRepository repository;
 
-  AddTrip(this.tripRepository);
+  AddTrip(this.repository);
 
   Future<void> call(TripEntity tripEntity) {
-    return tripRepository.addTrip(tripEntity);
+    return repository.addTrip(tripEntity);
   }
 }

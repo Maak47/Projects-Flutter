@@ -5,11 +5,11 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/error/failures.dart';
 
 class GetTrips {
-  final TripRepository tripRepository;
+  final TripRepository repository;
 
-  GetTrips(this.tripRepository);
+  GetTrips(this.repository);
 
   Future<Either<Failure, List<TripEntity>>> call() {
-    return tripRepository.getTrips();
+    return repository.getTrips();
   }
 }

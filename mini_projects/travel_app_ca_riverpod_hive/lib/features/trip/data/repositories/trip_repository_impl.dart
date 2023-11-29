@@ -26,7 +26,8 @@ class TripRepositoryImpl implements TripRepository {
   Future<Either<Failure, List<TripEntity>>> getTrips() async {
     try {
       final tripModels = localDataSource.getTrips();
-      List<TripEntity> res = tripModels.map((e) => e.toEntity()).toList();
+      List<TripEntity> res =
+          tripModels.map((model) => model.toEntity()).toList();
       return Right(res);
     } catch (error) {
       return Left(SomeSpecificError(error.toString()));
