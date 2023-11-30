@@ -1,11 +1,11 @@
-class Movie {
+class MovieEntity {
   final String title;
-  final String id;
+  final int id;
 
   final String overview;
   final String posterPath;
 
-  Movie(
+  MovieEntity(
       {required this.title,
       required this.id,
       required this.overview,
