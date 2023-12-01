@@ -1,4 +1,6 @@
-class MovieEntity {
+import 'package:equatable/equatable.dart';
+
+class MovieEntity extends Equatable {
   final String title;
   final int id;
 
@@ -10,4 +12,13 @@ class MovieEntity {
       required this.id,
       required this.overview,
       required this.posterPath});
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+        id,
+        title,
+        overview,
+        posterPath,
+      ];
 }

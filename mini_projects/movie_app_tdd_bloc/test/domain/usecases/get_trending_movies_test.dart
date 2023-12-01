@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
@@ -32,13 +33,13 @@ void main() {
 
   test('should get trending movies from the repository', () async {
     when(mockMovieRepository.getTrendingMovies())
-        .thenAnswer((_) async => tMovieList);
+        .thenAnswer((_) async => Right(tMovieList));
 
     //act
     final result = await usecase();
 
     //assert
-    expect(result, tMovieList);
+    expect(result, equals(Right(tMovieList)));
     verify(mockMovieRepository.getTrendingMovies());
     verifyNoMoreInteractions(mockMovieRepository);
   });
