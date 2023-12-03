@@ -50,7 +50,7 @@ class HomeScreen extends StatelessWidget {
               // Default Image
               Container(
                 height: 290,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: NetworkImage(bckImage),
                     fit: BoxFit.cover,
