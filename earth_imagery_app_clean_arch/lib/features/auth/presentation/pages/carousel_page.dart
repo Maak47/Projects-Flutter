@@ -1,5 +1,6 @@
 import 'package:earth_imagery_app_clean_arch/configs/constants/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -20,74 +21,79 @@ class _CarouselPageState extends State<CarouselPage>
   void initState() {
     super.initState();
 
-    // Fetch earth images from NASA EPIC API
-    fetchEarthImages('natural');
-
     // Initialize PageController
     _pageController = PageController(
       initialPage: 0,
-      viewportFraction: 0.85, // Set a custom viewportFraction
+      viewportFraction: 0.85,
     );
 
     // Initialize TabController
     _tabController = TabController(length: 4, vsync: this);
+
+    // Add listener for tab changes
     _tabController.addListener(() {
       setState(() {
         isLoading = true;
       });
-      switch (_tabController.index) {
-        case 0:
-          fetchEarthImages('natural');
-          break;
-        case 1:
-          fetchEarthImages('enhanced');
-          break;
-        case 2:
-          fetchEarthImages('aerosol');
-          break;
-        case 3:
-          fetchEarthImages('cloud');
-          break;
-      }
+      fetchEarthImages(getApiForTab(_tabController.index));
     });
+
+    // Fetch initial earth images
+    fetchEarthImages(getApiForTab(_tabController.index));
+  }
+
+  String getApiForTab(int tabIndex) {
+    switch (tabIndex) {
+      case 0:
+        return 'natural';
+      case 1:
+        return 'enhanced';
+      case 2:
+        return 'aerosol';
+      case 3:
+        return 'cloud';
+      default:
+        return 'natural';
+    }
   }
 
   Future<void> fetchEarthImages(String api) async {
     String apiUrl = 'https://epic.gsfc.nasa.gov/api/$api';
 
-    final response = await http.get(
-      Uri.parse(apiUrl),
-    );
-
-    setState(() {
-      isLoading = false;
-    });
-
-    print(response.body);
-    if (response.statusCode == 200) {
-      // Parse the JSON response and extract relevant information
-      final List<dynamic> data = json.decode(response.body);
+    try {
+      final response = await http.get(Uri.parse(apiUrl));
+      print(response.body);
 
       setState(() {
-        earthImages = data.map<Map<String, dynamic>>((dynamic item) {
-          // Extracting the relevant part from the identifier
-          String extractedPart =
-              '${item['identifier'].substring(0, 4)}/${item['identifier'].substring(4, 6)}/${item['identifier'].substring(6, 8)}/png/${item['image']}.png';
-
-          // Constructing the URL with forward slashes
-          String imageUrl =
-              'https://epic.gsfc.nasa.gov/archive/$api/' + extractedPart;
-
-          return {
-            'image': imageUrl,
-            'title': item['caption'],
-            'date': item['identifier'],
-          };
-        }).toList();
+        isLoading = false;
       });
-    } else {
-      // Handle error
-      print('Failed to fetch earth images: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+
+        setState(() {
+          earthImages = data.map<Map<String, dynamic>>((dynamic item) {
+            String extractedPart =
+                '${item['identifier'].substring(0, 4)}/${item['identifier'].substring(4, 6)}/${item['identifier'].substring(6, 8)}/png/${item['image']}.png';
+
+            String imageUrl =
+                'https://epic.gsfc.nasa.gov/archive/$api/' + extractedPart;
+
+            return {
+              'image': imageUrl,
+              'title': item['caption'],
+              'date': item['identifier'],
+            };
+          }).toList();
+        });
+      } else {
+        print('Failed to fetch earth images: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error fetching earth images: $error');
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -95,9 +101,7 @@ class _CarouselPageState extends State<CarouselPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:
-            Colors.transparent, // Set the background color to transparent
-
+        backgroundColor: Colors.transparent,
         toolbarHeight: .1,
         bottom: TabBar(
           controller: _tabController,
@@ -111,17 +115,12 @@ class _CarouselPageState extends State<CarouselPage>
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [
-          buildEarthImageCarousel(), // Natural
-          buildEarthImageCarousel(), // EPI
-          buildEarthImageCarousel(), // Aerosol
-          buildEarthImageCarousel(), // Cloud
-        ],
+        children: List.generate(4, (index) => buildEarthImageCarousel(index)),
       ),
     );
   }
 
-  Widget buildEarthImageCarousel() {
+  Widget buildEarthImageCarousel(int tabIndex) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -163,8 +162,9 @@ class _CarouselPageState extends State<CarouselPage>
                       borderRadius: BorderRadius.circular(16.0),
                       child: Hero(
                         tag: heroTag,
-                        child: Image.network(
-                          earthImages![index]['image'],
+                        //Caches Images so the images are not pulled from the backend after they are loaded.
+                        child: CachedNetworkImage(
+                          imageUrl: earthImages![index]['image'],
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -244,36 +244,4 @@ class _CarouselPageState extends State<CarouselPage>
       ],
     );
   }
-
-  // Future<void> fetchEarthImages() async {
-  //   final response = await http.get(
-  //     Uri.parse('https://epic.gsfc.nasa.gov/api/enhanced'),
-  //   );
-  //   print(response.body);
-  //   if (response.statusCode == 200) {
-  //     // Parse the JSON response and extract relevant information
-  //     final List<dynamic> data = json.decode(response.body);
-
-  //     setState(() {
-  //       earthImages = data.map<Map<String, dynamic>>((dynamic item) {
-  //         // Extracting the relevant part from the identifier
-  //         String extractedPart =
-  //             '${item['identifier'].substring(0, 4)}/${item['identifier'].substring(4, 6)}/${item['identifier'].substring(6, 8)}/png/${item['image']}.png';
-
-  //         // Constructing the URL with forward slashes
-  //         String imageUrl =
-  //             'https://epic.gsfc.nasa.gov/archive/enhanced/' + extractedPart;
-
-  //         return {
-  //           'image': imageUrl,
-  //           'title': item['caption'],
-  //           'date': item['identifier'],
-  //         };
-  //       }).toList();
-  //     });
-  //   } else {
-  //     // Handle error
-  //     print('Failed to fetch earth images: ${response.statusCode}');
-  //   }
-  // }
 }
