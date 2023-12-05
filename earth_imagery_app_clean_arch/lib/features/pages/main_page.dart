@@ -1,7 +1,10 @@
-import 'package:earth_imagery_app_clean_arch/configs/constants/constants.dart';
-import 'package:earth_imagery_app_clean_arch/features/auth/presentation/pages/auth_page.dart';
-import 'package:earth_imagery_app_clean_arch/features/auth/presentation/pages/carousel_page.dart';
-import 'package:earth_imagery_app_clean_arch/features/auth/presentation/pages/profile_page.dart';
+import 'dart:ui';
+
+import 'package:earth_imagery_app/configs/constants/constants.dart';
+import 'package:earth_imagery_app/features/pages/carousel_page.dart';
+import 'package:earth_imagery_app/features/pages/impressions.dart';
+import 'package:earth_imagery_app/features/pages/profile_page.dart';
+import 'package:earth_imagery_app/helpers/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 
@@ -11,15 +14,13 @@ class MainPage extends StatefulWidget {
   const MainPage({Key? key, required this.username}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _MainPageState createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
   final constants = AppConstants();
-  final BorderRadius _borderRadius = const BorderRadius.only(
-    topLeft: Radius.circular(25),
-    topRight: Radius.circular(25),
-  );
+  // ignore: unused_field
 
   ShapeBorder? bottomBarShape = const RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
@@ -54,50 +55,87 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: constants.kBackgroundColor,
-        title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [Text('Hey, ${widget.username}'), Text("Let's Explore")]),
+        backgroundColor: Colors.black,
+        title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text('Hey, ${widget.username}'),
+          const Text(
+            "Let's EXPLORE 🚀",
+            style: TextStyle(
+                fontWeight: FontWeight.bold, color: Color(0xff2EC4B6)),
+          )
+        ]),
         toolbarHeight: 100,
         actions: [
           Padding(
             padding: const EdgeInsets.all(20),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(100.0),
-              child: Image.asset(
-                'assets/images/profpic.jpg',
-                fit: BoxFit.cover,
-                height: 50,
-                width: 50,
-              ),
+            child: InkWell(
+              onTap: () {
+                setState(() {
+                  _selectedItemPosition = 2;
+                });
+              },
+              child: (_selectedItemPosition == 2)
+                  ? IconButton(
+                      onPressed: () {
+                        AuthService().logout(context);
+                      },
+                      icon: const Icon(
+                        Icons.logout_rounded,
+                        size: 30,
+                      ),
+                      color: constants.kAccentColor,
+                    )
+                  : CircleAvatar(
+                      radius: 26,
+                      backgroundColor: constants.kPrimaryColor,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100.0),
+                        child: Image.asset(
+                          'assets/images/profpic.jpg',
+                          fit: BoxFit.cover,
+                          height: 50,
+                          width: 50,
+                        ),
+                      ),
+                    ),
             ),
           ),
         ],
       ),
-      body: _buildBody(),
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/images/scaffold_background.jpg'),
+                    fit: BoxFit.fill)),
+          ),
+          Container(
+            color: Colors.black.withOpacity(0.5),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: .45, sigmaY: .45),
+              child: Container(
+                color: Colors.transparent,
+              ),
+            ),
+          ),
+          _buildBody(),
+        ],
+      ),
       bottomNavigationBar: SnakeNavigationBar.gradient(
         behaviour: snakeBarStyle,
         snakeShape: snakeShape,
         shape: bottomBarShape,
         padding: padding,
-
-        ///configuration for SnakeNavigationBar.color
-        // snakeViewColor: selectedColor,
-        // selectedItemColor:
-        //     snakeShape == SnakeShape.indicator ? selectedColor : null,
-        // unselectedItemColor: Colors.blueGrey,
-
         snakeViewGradient: selectedGradient,
         selectedItemGradient:
             snakeShape == SnakeShape.indicator ? selectedGradient : null,
         unselectedItemGradient: unselectedGradient,
-
         showUnselectedLabels: showUnselectedLabels,
         showSelectedLabels: showSelectedLabels,
-
         currentIndex: _selectedItemPosition,
         onTap: (index) => setState(() => _selectedItemPosition = index),
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
           ),
@@ -115,25 +153,13 @@ class _MainPageState extends State<MainPage> {
   Widget _buildBody() {
     switch (_selectedItemPosition) {
       case 0:
-        return CarouselPage();
+        return const CarouselPage();
       case 1:
-        return _buildMessages();
+        return const Impressions();
       case 2:
-        return ProfilePage();
+        return const ProfilePage();
       default:
         return Container();
     }
-  }
-
-  Widget _buildHome() {
-    return Center(
-      child: Text('Home Page'),
-    );
-  }
-
-  Widget _buildMessages() {
-    return Center(
-      child: Text('Messages Page'),
-    );
   }
 }

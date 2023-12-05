@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
-  ProfilePage({super.key});
+  const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class ProfilePage extends StatelessWidget {
                 radius: .70,
                 center: Alignment.topCenter,
                 colors: [
-              Colors.greenAccent,
+              Color(0xff2EC4B6),
               Color(0xff4b5886),
               Colors.transparent,
             ])),
@@ -26,7 +26,7 @@ class ProfilePage extends StatelessWidget {
               ),
               const CircleAvatar(
                 radius: 103,
-                backgroundColor: Colors.grey,
+                backgroundColor: Color(0x99ffffff),
                 child: CircleAvatar(
                   radius: 100,
                   backgroundImage: AssetImage('assets/images/profpic.jpg'),

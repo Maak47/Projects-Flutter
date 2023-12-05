@@ -1,4 +1,4 @@
-# earth_imagery_app_clean_arch
+# earth_imagery_app
 
 A new Flutter project.
 
