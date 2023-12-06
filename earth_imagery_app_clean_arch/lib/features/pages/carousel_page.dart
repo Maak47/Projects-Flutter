@@ -1,3 +1,4 @@
+import 'package:appwrite/appwrite.dart';
 import 'package:earth_imagery_app/features/pages/details_page.dart';
 import 'package:earth_imagery_app/features/widgets/Image_carousel_indicator.dart';
 import 'package:earth_imagery_app/features/widgets/navigation_buttons.dart';
@@ -5,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import '../../helpers/appwrite_service.dart' as service;
 
 class CarouselPage extends StatefulWidget {
   const CarouselPage({super.key});
@@ -20,27 +23,45 @@ class _CarouselPageState extends State<CarouselPage>
   int currentIndex = 0;
   late PageController _pageController;
   late TabController _tabController;
+  late Databases databases;
+  bool isAerosolTabLocked = false;
+  bool isCloudsTabLocked = false;
+  final Client client = Client()
+    ..setEndpoint('https://cloud.appwrite.io/v1')
+    ..setProject('imageryappearth')
+    ..setSelfSigned();
 
   @override
   void initState() {
     super.initState();
 
-    // Initialize PageController
     _pageController = PageController(
       initialPage: 0,
       viewportFraction: 0.85,
     );
 
-    // Initialize TabController
     _tabController = TabController(length: 4, vsync: this);
 
-    // Add listener for tab changes
     _tabController.addListener(() {
       fetchEarthImages(getApiForTab(_tabController.index));
     });
 
-    // Fetch initial earth images
     fetchEarthImages(getApiForTab(_tabController.index));
+
+    databases = Databases(Client());
+    fetchUserPreferences();
+  }
+
+  Future<void> fetchUserPreferences() async {
+    final user = await Account(client).get();
+    final userId = user.$id;
+    print(userId);
+
+    final subscriptionStatus = await service.fetchUserPreferences(userId);
+    setState(() {
+      isAerosolTabLocked = subscriptionStatus?['isAerosolTabLocked'] ?? false;
+      isCloudsTabLocked = subscriptionStatus?['isCloudsTabLocked'] ?? false;
+    });
   }
 
   @override
@@ -112,11 +133,11 @@ class _CarouselPageState extends State<CarouselPage>
         toolbarHeight: .1,
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
+          tabs: [
             Tab(text: 'Natural'),
             Tab(text: 'Enhanced'),
-            Tab(text: 'Aerosol'),
-            Tab(text: 'Cloud'),
+            if (!isAerosolTabLocked) Tab(text: 'Aerosol'),
+            if (!isCloudsTabLocked) Tab(text: 'Cloud'),
           ],
         ),
       ),

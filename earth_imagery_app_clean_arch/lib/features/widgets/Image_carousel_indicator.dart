@@ -1,5 +1,5 @@
+import 'package:earth_imagery_app/configs/constants/constants.dart';
 import 'package:flutter/material.dart';
-import '../../configs/constants/constants.dart';
 
 class ImageCarouselIndicator extends StatelessWidget {
   final List<Map<String, dynamic>>? earthImages;
@@ -19,8 +19,7 @@ class ImageCarouselIndicator extends StatelessWidget {
             height: 10,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color:
-                  currentIndex == i ? AppConstants().kAccentColor : Colors.grey,
+              color: currentIndex == i ? kAccentColor : Colors.grey,
             ),
           ),
       ],

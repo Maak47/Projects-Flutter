@@ -1,7 +1,7 @@
-import 'package:earth_imagery_app/configs/constants/constants.dart';
 import 'package:earth_imagery_app/features/pages/auth_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'configs/constants/constants.dart';
 import 'features/models/user_model.dart';
 
 void main() async {
@@ -14,7 +14,6 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final constants = AppConstants();
   MyApp({super.key});
 
   @override
@@ -22,12 +21,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        textTheme: constants.kTextTheme,
+        textTheme: kTextTheme,
         colorScheme: ColorScheme.dark(
           brightness: Brightness.dark,
-          primary: constants.kPrimaryColor!,
-          secondary: constants.kAccentColor!,
-          background: constants.kBackgroundColor!,
+          primary: kPrimaryColor!,
+          secondary: kAccentColor!,
+          background: kBackgroundColor!,
         ),
       ),
       title: 'EarthVisor App',

@@ -3,8 +3,9 @@ import 'dart:ui';
 
 import 'package:crypto/crypto.dart';
 import 'package:earth_imagery_app/configs/constants/constants.dart';
-import 'package:earth_imagery_app/helpers/auth_service.dart';
 import 'package:flutter/material.dart';
+
+import '../../helpers/appwrite_service.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
@@ -15,8 +16,6 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  final constants = AppConstants();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,14 +42,13 @@ class _AuthPageState extends State<AuthPage> {
                       Text(
                         'Earth',
                         style: TextStyle(
-                            color: constants.kPrimaryColor,
+                            color: kPrimaryColor,
                             fontSize: 90,
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
                         'IMAGERY',
-                        style: TextStyle(
-                            color: constants.kTextColor, fontSize: 75),
+                        style: TextStyle(color: kTextColor, fontSize: 75),
                       ),
                     ],
                   ),
@@ -88,8 +86,8 @@ class _AuthPageState extends State<AuthPage> {
                               });
                         },
                         style: ElevatedButton.styleFrom(
-                          foregroundColor: constants.kTextColor,
-                          backgroundColor: constants.kPrimaryColor,
+                          foregroundColor: kTextColor,
+                          backgroundColor: kPrimaryColor,
                           padding: const EdgeInsets.all(16.0),
                         ),
                         child: const Text('Login'),
@@ -127,7 +125,7 @@ class _AuthPageState extends State<AuthPage> {
                               side: const BorderSide(
                                   width: 1, color: Color(0xff2EC4B6)),
                               borderRadius: BorderRadius.circular(25)),
-                          foregroundColor: constants.kPrimaryColor,
+                          foregroundColor: kPrimaryColor,
                           backgroundColor: Colors.transparent,
                           padding: const EdgeInsets.all(16.0),
                         ),
@@ -155,7 +153,6 @@ class AuthCard extends StatefulWidget {
 }
 
 class _AuthCardState extends State<AuthCard> {
-  final constants = AppConstants();
   TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 
@@ -296,24 +293,24 @@ class _AuthCardState extends State<AuthCard> {
                               borderRadius: BorderRadius.circular(25),
                               side: const BorderSide(color: Color(0xff2EC4B6))),
                           backgroundColor: Colors.transparent,
-                          foregroundColor: constants.kPrimaryColor,
+                          foregroundColor: kPrimaryColor,
                           padding: const EdgeInsets.all(16.0),
                         ),
                         onPressed: () {
                           if (!widget.onLogin) {
                             // Log in logic
-                            AuthService().register(
+                            register(
                                 context,
                                 emailController.text,
                                 usernameController.text,
                                 _hashPassword(passwordController.text));
                           } else {
                             // Sign up logic
-                            AuthService().login(
-                                context,
-                                emailController.text,
-                                _hashPassword(passwordController.text),
-                                usernameController.text);
+                            login(
+                              context,
+                              emailController.text,
+                              _hashPassword(passwordController.text),
+                            );
                             // Navigate to the Main Page
                           }
                         },
@@ -335,7 +332,7 @@ class _AuthCardState extends State<AuthCard> {
                   });
                 },
                 style: TextButton.styleFrom(
-                  foregroundColor: constants.kPrimaryColor,
+                  foregroundColor: kPrimaryColor,
                 ),
                 child: Text(
                   (widget.onLogin)

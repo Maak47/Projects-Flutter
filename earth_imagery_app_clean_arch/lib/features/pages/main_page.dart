@@ -4,7 +4,7 @@ import 'package:earth_imagery_app/configs/constants/constants.dart';
 import 'package:earth_imagery_app/features/pages/carousel_page.dart';
 import 'package:earth_imagery_app/features/pages/impressions.dart';
 import 'package:earth_imagery_app/features/pages/profile_page.dart';
-import 'package:earth_imagery_app/helpers/auth_service.dart';
+import 'package:earth_imagery_app/helpers/appwrite_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 
@@ -19,9 +19,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final constants = AppConstants();
-  // ignore: unused_field
-
   ShapeBorder? bottomBarShape = const RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
         topLeft: Radius.circular(25), topRight: Radius.circular(25)),
@@ -77,17 +74,17 @@ class _MainPageState extends State<MainPage> {
               child: (_selectedItemPosition == 2)
                   ? IconButton(
                       onPressed: () {
-                        AuthService().logout(context);
+                        logout(context);
                       },
                       icon: const Icon(
                         Icons.logout_rounded,
                         size: 30,
                       ),
-                      color: constants.kAccentColor,
+                      color: kAccentColor,
                     )
                   : CircleAvatar(
                       radius: 26,
-                      backgroundColor: constants.kPrimaryColor,
+                      backgroundColor: kPrimaryColor,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(100.0),
                         child: Image.asset(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class NavigationButtons extends StatelessWidget {
   final List<Map<String, dynamic>>? earthImages;
   int currentIndex = 0;
