@@ -10,11 +10,11 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ImageMetadataAdapter());
   await Hive.openBox<ImageMetadata>('imageMetadata');
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {

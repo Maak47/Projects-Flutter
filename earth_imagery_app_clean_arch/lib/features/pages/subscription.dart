@@ -43,7 +43,7 @@ class _SubscribePageState extends State<SubscribePage> {
       appBar: AppBar(),
       body: Center(
         child: Padding(
-          padding: EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(12.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,26 +67,27 @@ class _SubscribePageState extends State<SubscribePage> {
                           title: Text(plan['title'] ?? ''),
                           subtitle: Text(
                             plan['subtitle'] ?? '',
-                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                            style: const TextStyle(
+                                color: Colors.grey, fontSize: 12),
                           ),
                           trailing: _buildPriceWidget(plan),
                           onTap: () {
                             showDialog(
                                 context: context,
                                 builder: (context) => AlertDialog(
-                                      content: Text('Confirm Payment'),
+                                      content: const Text('Confirm Payment'),
                                       actions: [
                                         TextButton(
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },
-                                          child: Text('Yes'),
+                                          child: const Text('Yes'),
                                         ),
                                         TextButton(
                                             onPressed: () {
                                               Navigator.of(context).pop();
                                             },
-                                            child: Text('No'))
+                                            child: const Text('No'))
                                       ],
                                     ));
                             _updateSubscription(plan);
@@ -101,7 +102,7 @@ class _SubscribePageState extends State<SubscribePage> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('Go back')),
+                  child: const Text('Go back')),
             ],
           ),
         ),
@@ -141,10 +142,10 @@ class _SubscribePageState extends State<SubscribePage> {
       text: TextSpan(children: [
         TextSpan(
             text: '${convertedPrice.toStringAsFixed(2)} ',
-            style: TextStyle(color: Colors.green, fontSize: 25)),
+            style: const TextStyle(color: Colors.green, fontSize: 25)),
         TextSpan(
-            text: '${selectedCurrency.value}',
-            style: TextStyle(color: Colors.blue, fontSize: 20)),
+            text: selectedCurrency.value,
+            style: const TextStyle(color: Colors.blue, fontSize: 20)),
       ]),
     );
   }

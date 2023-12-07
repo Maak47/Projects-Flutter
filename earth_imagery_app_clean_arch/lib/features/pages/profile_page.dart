@@ -6,7 +6,7 @@ import '../../configs/constants/constants.dart';
 import '../../helpers/appwrite_service.dart' as service;
 
 class ProfilePage extends StatefulWidget {
-  ProfilePage({super.key});
+  const ProfilePage({super.key});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -72,7 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 'Hobby: Procrastinating',
                 style: textStyle(20),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               (!isSubscribed)
@@ -86,7 +86,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         foregroundColor: Colors.black,
                         padding: const EdgeInsets.all(16.0),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Upgrade your Rank',
                         style: TextStyle(color: Colors.black),
                       ))

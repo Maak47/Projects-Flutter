@@ -196,8 +196,8 @@ class _CarouselPageState extends State<CarouselPage>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           DropdownButton<String>(
-            dropdownColor:
-                Color.fromARGB(200, 43, 127, 135), // Set your desired color
+            dropdownColor: const Color.fromARGB(
+                200, 43, 127, 135), // Set your desired color
             value: selectedTimeZone,
             onChanged: (String? newValue) {
               if (newValue != null) {

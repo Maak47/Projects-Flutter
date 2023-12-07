@@ -7,27 +7,27 @@ class Impressions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Padding(
-      padding: EdgeInsets.all(15.0),
+      padding: const EdgeInsets.all(15.0),
       child: Center(
         child: Column(
           children: [
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             Image.asset('assets/images/message.png'),
-            SizedBox(height: 5),
-            Text(
+            const SizedBox(height: 5),
+            const Text(
               'Impression/Kesan:',
               style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
             ),
-            Text(
+            const Text(
                 'Saya mempelajari hal-hal baru dan menarik (ternyata ada yang lebih sensitif dari perasaan)',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 17)),
-            SizedBox(height: 10),
-            Text(
+            const SizedBox(height: 10),
+            const Text(
               'Message/Pesan:',
               style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
             ),
-            Text(
+            const Text(
               'Pengen bisa ngoding flutter sambil merem',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 17),

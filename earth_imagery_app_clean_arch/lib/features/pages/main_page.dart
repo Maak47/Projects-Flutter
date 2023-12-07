@@ -57,7 +57,7 @@ class _MainPageState extends State<MainPage> {
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(
             'Cadet, ${widget.username}',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
           ),
           const Text(
             "Let's EXPLORE 🚀",
@@ -103,7 +103,7 @@ class _MainPageState extends State<MainPage> {
           ),
         ],
       ),
-      drawer: ThemedDrawer(),
+      drawer: const ThemedDrawer(),
       body: Stack(
         children: [
           Container(
@@ -159,7 +159,7 @@ class _MainPageState extends State<MainPage> {
       case 1:
         return const Impressions();
       case 2:
-        return ProfilePage();
+        return const ProfilePage();
       default:
         return Container();
     }
