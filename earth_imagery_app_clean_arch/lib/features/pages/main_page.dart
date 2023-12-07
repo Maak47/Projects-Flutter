@@ -4,6 +4,7 @@ import 'package:earth_imagery_app/configs/constants/constants.dart';
 import 'package:earth_imagery_app/features/pages/carousel_page.dart';
 import 'package:earth_imagery_app/features/pages/impressions.dart';
 import 'package:earth_imagery_app/features/pages/profile_page.dart';
+import 'package:earth_imagery_app/features/widgets/drawer.dart';
 import 'package:earth_imagery_app/helpers/appwrite_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
@@ -54,7 +55,10 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('Hey, ${widget.username}'),
+          Text(
+            'Cadet, ${widget.username}',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+          ),
           const Text(
             "Let's EXPLORE 🚀",
             style: TextStyle(
@@ -84,7 +88,7 @@ class _MainPageState extends State<MainPage> {
                     )
                   : CircleAvatar(
                       radius: 26,
-                      backgroundColor: kPrimaryColor,
+                      backgroundColor: kAccentColor,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(100.0),
                         child: Image.asset(
@@ -99,6 +103,7 @@ class _MainPageState extends State<MainPage> {
           ),
         ],
       ),
+      drawer: ThemedDrawer(),
       body: Stack(
         children: [
           Container(

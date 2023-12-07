@@ -53,7 +53,7 @@ class _SubscribePageState extends State<SubscribePage> {
                   'Choose a subscription Plan for additional functionality of the app'),
               _buildCurrencySelection(),
               SizedBox(
-                height: 280,
+                height: 300,
                 child: ListView.builder(
                   itemCount: plans.length,
                   itemBuilder: (context, index) {

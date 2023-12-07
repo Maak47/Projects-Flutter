@@ -100,7 +100,6 @@ Future<void> updateUserPreferences(
 
 Future<Map<String, dynamic>?> fetchUserPreferences(String userId) async {
   final database = Databases(client);
-  final user = await Account(client).get();
   try {
     final response = await database.getDocument(
         databaseId: databaseId, collectionId: collectionId, documentId: userId);
@@ -109,27 +108,36 @@ Future<Map<String, dynamic>?> fetchUserPreferences(String userId) async {
       final userPreferences = response.data;
       print(userPreferences);
       return userPreferences;
-    } else {
-      await database.createDocument(
-        databaseId: databaseId,
-        collectionId: collectionId,
-        documentId: user.$id,
-        data: {
-          'isAerosolActive': false,
-          'isCloudsActive': false,
-          'username': user.name,
-          'email': user.email,
-          'passwordHash': user.password,
-          'creationDate': user.$createdAt,
-        },
-      );
-      return {
-        'isAerosolActive': false,
-        'isCloudsActive': false,
-      };
     }
+    return {
+      'isAerosolActive': false,
+      'isCloudsActive': false,
+    };
   } on AppwriteException catch (e) {
     print(e.message);
   }
   return null;
+}
+
+Future<void> createDocument(String userId) async {
+  final database = Databases(client);
+  final user = await Account(client).get();
+
+  try {
+    await database.createDocument(
+      databaseId: databaseId,
+      collectionId: collectionId,
+      documentId: userId,
+      data: {
+        'isAerosolActive': false,
+        'isCloudsActive': false,
+        'username': user.name,
+        'email': user.email,
+        'passwordHash': user.password,
+        'creationDate': user.$createdAt,
+      },
+    );
+  } on AppwriteException catch (e) {
+    print(e.message);
+  }
 }

@@ -5,15 +5,15 @@ class Impressions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
         body: Padding(
       padding: EdgeInsets.all(15.0),
       child: Center(
         child: Column(
           children: [
-            // SizedBox(height: 60),
-            // Image.asset('assets/images/mobile.png'),
-            SizedBox(height: 10),
+            SizedBox(height: 15),
+            Image.asset('assets/images/message.png'),
+            SizedBox(height: 5),
             Text(
               'Impression/Kesan:',
               style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),

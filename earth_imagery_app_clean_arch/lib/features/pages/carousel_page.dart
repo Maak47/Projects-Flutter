@@ -1,10 +1,13 @@
 import 'package:appwrite/appwrite.dart';
+import 'package:earth_imagery_app/configs/constants/constants.dart';
 import 'package:earth_imagery_app/features/pages/details_page.dart';
 import 'package:earth_imagery_app/features/widgets/Image_carousel_indicator.dart';
 import 'package:earth_imagery_app/features/widgets/navigation_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'package:location/location.dart';
 import 'dart:convert';
 
 import '../../helpers/appwrite_service.dart' as service;
@@ -26,6 +29,16 @@ class _CarouselPageState extends State<CarouselPage>
   late Databases databases;
   bool isAerosolActive = false;
   bool isCloudsActive = false;
+  String convertedDate = '';
+  List<String> timeZones = [
+    'UTC',
+    'America/New_York',
+    'Europe/London',
+    'Asia/Tokyo',
+  ];
+
+  String selectedTimeZone = 'UTC';
+
   final Client client = Client()
     ..setEndpoint('https://cloud.appwrite.io/v1')
     ..setProject('imageryappearth')
@@ -48,7 +61,6 @@ class _CarouselPageState extends State<CarouselPage>
 
     fetchEarthImages(getApiForTab(_tabController.index));
 
-    databases = Databases(Client());
     fetchUserPreferences();
   }
 
@@ -58,6 +70,7 @@ class _CarouselPageState extends State<CarouselPage>
     print(userId);
 
     final subscriptionStatus = await service.fetchUserPreferences(userId);
+    await service.createDocument(userId);
     setState(() {
       isAerosolActive = subscriptionStatus?['isAerosolActive'] ?? false;
       isCloudsActive = subscriptionStatus?['isCloudsActive'] ?? false;
@@ -134,10 +147,10 @@ class _CarouselPageState extends State<CarouselPage>
         bottom: TabBar(
           controller: _tabController,
           tabs: [
-            Tab(text: 'Natural'),
-            Tab(text: 'Enhanced'),
-            if (isAerosolActive) Tab(text: 'Aerosol'),
-            if (isCloudsActive) Tab(text: 'Cloud'),
+            const Tab(text: 'Natural'),
+            const Tab(text: 'Enhanced'),
+            if (isAerosolActive) const Tab(text: 'Aerosol'),
+            if (isCloudsActive) const Tab(text: 'Cloud'),
           ],
         ),
       ),
@@ -153,6 +166,23 @@ class _CarouselPageState extends State<CarouselPage>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          DropdownButton<String>(
+            dropdownColor: kPrimaryColor,
+            value: selectedTimeZone,
+            onChanged: (String? newValue) {
+              if (newValue != null) {
+                setState(() {
+                  selectedTimeZone = newValue;
+                });
+              }
+            },
+            items: timeZones.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
           GestureDetector(
             onTap: () {
               // Open detailed page when tapping on the current image

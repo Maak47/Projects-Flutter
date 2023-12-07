@@ -1,6 +1,8 @@
 import 'package:earth_imagery_app/features/pages/subscription.dart';
 import 'package:flutter/material.dart';
 
+import '../../configs/constants/constants.dart';
+
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
@@ -23,7 +25,7 @@ class ProfilePage extends StatelessWidget {
               child: Column(
             children: [
               const SizedBox(
-                height: 140,
+                height: 100,
               ),
               const CircleAvatar(
                 radius: 103,
@@ -52,11 +54,19 @@ class ProfilePage extends StatelessWidget {
                 'Hobby: Procrastinating',
                 style: textStyle(20),
               ),
+              SizedBox(
+                height: 20,
+              ),
               ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const SubscribePage()));
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: kPrimaryColor,
+                    foregroundColor: Colors.black,
+                    padding: const EdgeInsets.all(16.0),
+                  ),
                   child: Text(
                     'Upgrade your Rank',
                     style: TextStyle(color: Colors.black),

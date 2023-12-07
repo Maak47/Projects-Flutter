@@ -53,7 +53,7 @@ class _DetailPageState extends State<DetailPage> {
         await box.close();
 
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Image saved to gallery.'),
             duration: Duration(seconds: 2),
           ),
@@ -104,9 +104,10 @@ class _DetailPageState extends State<DetailPage> {
           Positioned(
             right: 10,
             top: 90,
-            child: IconButton(
+            child: ElevatedButton.icon(
+              label: const Text('Save to Phone'),
               onPressed: saveToGallery,
-              icon: Icon(Icons.download_rounded),
+              icon: const Icon(Icons.download_rounded),
             ),
           ),
         ],
