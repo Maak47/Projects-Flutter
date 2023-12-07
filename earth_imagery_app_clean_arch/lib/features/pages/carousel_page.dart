@@ -1,5 +1,4 @@
 import 'package:appwrite/appwrite.dart';
-import 'package:earth_imagery_app/configs/constants/constants.dart';
 import 'package:earth_imagery_app/features/pages/details_page.dart';
 import 'package:earth_imagery_app/features/widgets/Image_carousel_indicator.dart';
 import 'package:earth_imagery_app/features/widgets/navigation_buttons.dart';
@@ -7,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:location/location.dart';
 import 'dart:convert';
 
 import '../../helpers/appwrite_service.dart' as service;
@@ -35,6 +33,9 @@ class _CarouselPageState extends State<CarouselPage>
     'America/New_York',
     'Europe/London',
     'Asia/Tokyo',
+    'Asia/Jakarta',
+    'Asia/Jayapura',
+    'Asia/Makassar',
   ];
 
   String selectedTimeZone = 'UTC';
@@ -67,7 +68,7 @@ class _CarouselPageState extends State<CarouselPage>
   Future<void> fetchUserPreferences() async {
     final user = await Account(client).get();
     final userId = user.$id;
-    print(userId);
+    debugPrint(userId);
 
     final subscriptionStatus = await service.fetchUserPreferences(userId);
     await service.createDocument(userId);
@@ -104,7 +105,7 @@ class _CarouselPageState extends State<CarouselPage>
 
     try {
       final response = await http.get(Uri.parse(apiUrl));
-      // debugPrint(response.body);
+      // debug(response.body);
 
       if (mounted) {
         // Check if the widget is still mounted before calling setState
@@ -127,15 +128,43 @@ class _CarouselPageState extends State<CarouselPage>
             }).toList();
           });
         } else {
-          // debugPrint('Failed to fetch earth images: ${response.statusCode}');
+          // debug('Failed to fetch earth images: ${response.statusCode}');
         }
       }
     } catch (error) {
       if (mounted) {
         // Check if the widget is still mounted before calling setState
-        // debugPrint('Error fetching earth images: $error');
+        // debug('Error fetching earth images: $error');
       }
     }
+  }
+
+  String convertDateString(String dateString) {
+    try {
+      DateTime date = DateTime.parse(dateString);
+
+      // Map time zones to offsets
+      final Map<String, int> timeZoneOffsets = {
+        'UTC': 0,
+        'America/New_York': -5,
+        'Europe/London': 0,
+        'Asia/Tokyo': 9,
+        'Asia/Jakarta': 7,
+        'Asia/Jayapura': 9,
+        'Asia/Makassar': 8,
+      };
+
+      // Adjust the date with the offset
+      DateTime convertedDate = date
+          .toUtc()
+          .add(Duration(hours: timeZoneOffsets[selectedTimeZone] ?? 0));
+
+      // Format the converted date using intl package
+      return DateFormat('yyyy-MM-dd HH:mm:ss').format(convertedDate);
+    } catch (e) {
+      (e);
+    }
+    return DateFormat.YEAR_MONTH_DAY;
   }
 
   @override
@@ -167,12 +196,14 @@ class _CarouselPageState extends State<CarouselPage>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           DropdownButton<String>(
-            dropdownColor: kPrimaryColor,
+            dropdownColor:
+                Color.fromARGB(200, 43, 127, 135), // Set your desired color
             value: selectedTimeZone,
             onChanged: (String? newValue) {
               if (newValue != null) {
                 setState(() {
                   selectedTimeZone = newValue;
+                  fetchEarthImages(getApiForTab(_tabController.index));
                 });
               }
             },
@@ -183,6 +214,8 @@ class _CarouselPageState extends State<CarouselPage>
               );
             }).toList(),
           ),
+          Text(
+              'Converted Date : ${convertDateString(earthImages?[currentIndex]['date'] ?? '')}'),
           GestureDetector(
             onTap: () {
               // Open detailed page when tapping on the current image
@@ -194,7 +227,8 @@ class _CarouselPageState extends State<CarouselPage>
                     arguments: {
                       'image': earthImages![currentIndex]['image'],
                       'title': earthImages![currentIndex]['title'],
-                      'date': earthImages![currentIndex]['date'],
+                      'date':
+                          convertDateString(earthImages?[currentIndex]['date']),
                     },
                   ),
                 ),

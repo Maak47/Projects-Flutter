@@ -42,14 +42,6 @@ class ThemedDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.language),
-              title: const Text('World Time'),
-              onTap: () {
-                // Navigate to World Time page
-                ;
-              },
-            ),
-            ListTile(
               leading: const Icon(Icons.policy_outlined),
               title: const Text('Privacy Policy'),
               onTap: () {
@@ -63,7 +55,6 @@ class ThemedDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const TermsAndConditionsPage()));
-                ;
               },
             ),
             Divider(

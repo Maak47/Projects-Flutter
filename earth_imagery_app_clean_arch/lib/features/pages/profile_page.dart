@@ -1,10 +1,28 @@
+import 'package:appwrite/appwrite.dart';
 import 'package:earth_imagery_app/features/pages/subscription.dart';
 import 'package:flutter/material.dart';
 
 import '../../configs/constants/constants.dart';
+import '../../helpers/appwrite_service.dart' as service;
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+class ProfilePage extends StatefulWidget {
+  ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  final Client client = Client()
+    ..setEndpoint('https://cloud.appwrite.io/v1')
+    ..setProject('imageryappearth')
+    ..setSelfSigned();
+  bool isSubscribed = false;
+  @override
+  void initState() {
+    super.initState();
+    fetchUserPreferences();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,20 +75,32 @@ class ProfilePage extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const SubscribePage()));
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: kPrimaryColor,
-                    foregroundColor: Colors.black,
-                    padding: const EdgeInsets.all(16.0),
-                  ),
-                  child: Text(
-                    'Upgrade your Rank',
-                    style: TextStyle(color: Colors.black),
-                  )),
+              (!isSubscribed)
+                  ? ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const SubscribePage()));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: kPrimaryColor,
+                        foregroundColor: Colors.black,
+                        padding: const EdgeInsets.all(16.0),
+                      ),
+                      child: Text(
+                        'Upgrade your Rank',
+                        style: TextStyle(color: Colors.black),
+                      ))
+                  : ElevatedButton(
+                      onPressed: null,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: kPrimaryColor,
+                        foregroundColor: Colors.black,
+                        padding: const EdgeInsets.all(16.0),
+                      ),
+                      child: Text(
+                        'Already Promoted',
+                        style: TextStyle(color: kPrimaryColor),
+                      )),
             ],
           )),
         ),
@@ -81,5 +111,16 @@ class ProfilePage extends StatelessWidget {
   TextStyle textStyle(double? fontSize) {
     return TextStyle(
         fontSize: fontSize, color: Colors.white, fontWeight: FontWeight.bold);
+  }
+
+  Future<void> fetchUserPreferences() async {
+    final user = await Account(client).get();
+    final userId = user.$id;
+    (userId);
+
+    final subscriptionStatus = await service.fetchUserPreferences(userId);
+    setState(() {
+      isSubscribed = subscriptionStatus?['isSubscribed'] ?? false;
+    });
   }
 }

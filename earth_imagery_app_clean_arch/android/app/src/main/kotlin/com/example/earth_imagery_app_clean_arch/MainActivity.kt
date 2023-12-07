@@ -1,4 +1,4 @@
-package com.example.earth_imagery_app
+package com.example.earth_image_app
 
 import io.flutter.embedding.android.FlutterActivity
 

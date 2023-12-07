@@ -159,7 +159,7 @@ class _MainPageState extends State<MainPage> {
       case 1:
         return const Impressions();
       case 2:
-        return const ProfilePage();
+        return ProfilePage();
       default:
         return Container();
     }

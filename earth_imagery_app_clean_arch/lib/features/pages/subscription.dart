@@ -165,7 +165,6 @@ class _SubscribePageState extends State<SubscribePage> {
 
     // For example:
     updateUserPreferences(isAerosolActive, isCloudsActive);
-    print(
-        'Updating preferences - Aerosol: $isAerosolActive, Clouds: $isCloudsActive');
+    ('Updating preferences - Aerosol: $isAerosolActive, Clouds: $isCloudsActive');
   }
 }

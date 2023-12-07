@@ -1,13 +1,15 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:appwrite/appwrite.dart';
 import 'package:earth_imagery_app/features/pages/auth_page.dart';
 import 'package:flutter/material.dart';
 
 import '../features/pages/main_page.dart';
 
-final String endpoint = 'https://cloud.appwrite.io/v1';
-final String projectId = 'imageryappearth';
-final String databaseId = '65714307121f9035deec';
-final String collectionId = '6571431479afa75c4852';
+const String endpoint = 'https://cloud.appwrite.io/v1';
+const String projectId = 'imageryappearth';
+const String databaseId = '65714307121f9035deec';
+const String collectionId = '6571431479afa75c4852';
 final database = Databases(client);
 
 final Client client = Client()
@@ -31,7 +33,7 @@ Future<void> login(
               username: username,
             )));
   } on AppwriteException catch (e) {
-    print(e.message);
+    (e.message);
   }
 }
 
@@ -46,11 +48,10 @@ Future<void> register(BuildContext context, String email, String username,
     );
 
     // Login the user after successful registration
-    // ignore: use_build_context_synchronously
     await login(context, email, password);
   } on AppwriteException catch (e) {
     //show message to user or do other operation based on error as required
-    print(e.message);
+    (e.message);
   }
 }
 
@@ -58,19 +59,6 @@ Future<void> logout(BuildContext context) async {
   await Account(client).deleteSession(sessionId: 'current');
   Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (context) => const AuthPage()));
-}
-
-void _showSnackBar(BuildContext context, String message, Color backgroundColor,
-    Color textColor) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text(
-        message,
-        style: TextStyle(color: textColor),
-      ),
-      backgroundColor: backgroundColor,
-    ),
-  );
 }
 
 Future<void> updateUserPreferences(
@@ -86,15 +74,16 @@ Future<void> updateUserPreferences(
       data: {
         'isAerosolActive': isAerosolActive,
         'isCloudsActive': isCloudsActive,
+        'isSubscribed': true,
       },
     );
-    if (response.data != null) {
+    if (response.data.isNotEmpty) {
       final userPreferences = response.data;
-      print(userPreferences);
+      (userPreferences);
     }
   } on AppwriteException catch (e) {
     //show message to user or do other operation based on error as required
-    print(e.message);
+    (e.message);
   }
 }
 
@@ -104,17 +93,18 @@ Future<Map<String, dynamic>?> fetchUserPreferences(String userId) async {
     final response = await database.getDocument(
         databaseId: databaseId, collectionId: collectionId, documentId: userId);
 
-    if (response.data != null) {
+    if (response.data.isNotEmpty) {
       final userPreferences = response.data;
-      print(userPreferences);
+      (userPreferences);
       return userPreferences;
     }
     return {
+      'isSubscribed': false,
       'isAerosolActive': false,
       'isCloudsActive': false,
     };
   } on AppwriteException catch (e) {
-    print(e.message);
+    (e.message);
   }
   return null;
 }
@@ -129,6 +119,7 @@ Future<void> createDocument(String userId) async {
       collectionId: collectionId,
       documentId: userId,
       data: {
+        'isSubscribed': false,
         'isAerosolActive': false,
         'isCloudsActive': false,
         'username': user.name,
@@ -138,6 +129,6 @@ Future<void> createDocument(String userId) async {
       },
     );
   } on AppwriteException catch (e) {
-    print(e.message);
+    (e.message);
   }
 }

@@ -27,11 +27,11 @@ class _DetailPageState extends State<DetailPage> {
           '${directory!.path}/${DateTime.now().millisecondsSinceEpoch}.png';
 
       await File(filePath).writeAsBytes(bytes);
-      print('FilePath: $filePath');
+      ('FilePath: $filePath');
 
       return filePath;
     } catch (e) {
-      print('Error saving image locally: $e');
+      ('Error saving image locally: $e');
       return ''; // Handle error appropriately
     }
   }
@@ -59,7 +59,7 @@ class _DetailPageState extends State<DetailPage> {
           ),
         );
       } catch (e) {
-        print('Error saving to gallery: $e');
+        ('Error saving to gallery: $e');
         // Handle error appropriately
       }
     }
