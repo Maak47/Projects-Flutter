@@ -24,8 +24,8 @@ class _CarouselPageState extends State<CarouselPage>
   late PageController _pageController;
   late TabController _tabController;
   late Databases databases;
-  bool isAerosolTabLocked = false;
-  bool isCloudsTabLocked = false;
+  bool isAerosolActive = false;
+  bool isCloudsActive = false;
   final Client client = Client()
     ..setEndpoint('https://cloud.appwrite.io/v1')
     ..setProject('imageryappearth')
@@ -59,8 +59,8 @@ class _CarouselPageState extends State<CarouselPage>
 
     final subscriptionStatus = await service.fetchUserPreferences(userId);
     setState(() {
-      isAerosolTabLocked = subscriptionStatus?['isAerosolTabLocked'] ?? false;
-      isCloudsTabLocked = subscriptionStatus?['isCloudsTabLocked'] ?? false;
+      isAerosolActive = subscriptionStatus?['isAerosolActive'] ?? false;
+      isCloudsActive = subscriptionStatus?['isCloudsActive'] ?? false;
     });
   }
 
@@ -91,7 +91,7 @@ class _CarouselPageState extends State<CarouselPage>
 
     try {
       final response = await http.get(Uri.parse(apiUrl));
-      debugPrint(response.body);
+      // debugPrint(response.body);
 
       if (mounted) {
         // Check if the widget is still mounted before calling setState
@@ -114,13 +114,13 @@ class _CarouselPageState extends State<CarouselPage>
             }).toList();
           });
         } else {
-          debugPrint('Failed to fetch earth images: ${response.statusCode}');
+          // debugPrint('Failed to fetch earth images: ${response.statusCode}');
         }
       }
     } catch (error) {
       if (mounted) {
         // Check if the widget is still mounted before calling setState
-        debugPrint('Error fetching earth images: $error');
+        // debugPrint('Error fetching earth images: $error');
       }
     }
   }
@@ -136,8 +136,8 @@ class _CarouselPageState extends State<CarouselPage>
           tabs: [
             Tab(text: 'Natural'),
             Tab(text: 'Enhanced'),
-            if (!isAerosolTabLocked) Tab(text: 'Aerosol'),
-            if (!isCloudsTabLocked) Tab(text: 'Cloud'),
+            if (isAerosolActive) Tab(text: 'Aerosol'),
+            if (isCloudsActive) Tab(text: 'Cloud'),
           ],
         ),
       ),

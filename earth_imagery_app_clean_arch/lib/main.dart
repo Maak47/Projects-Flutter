@@ -2,14 +2,14 @@ import 'package:earth_imagery_app/features/pages/auth_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'configs/constants/constants.dart';
-import 'features/models/user_model.dart';
+import 'features/models/image_metadata.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Hive.initFlutter();
-  Hive.registerAdapter(UserModelAdapter());
-  await Hive.openBox<UserModel>('users');
+  Hive.registerAdapter(ImageMetadataAdapter());
+  await Hive.openBox<ImageMetadata>('imageMetadata');
   runApp(MyApp());
 }
 

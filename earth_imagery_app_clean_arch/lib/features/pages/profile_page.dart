@@ -1,3 +1,4 @@
+import 'package:earth_imagery_app/features/pages/subscription.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -51,9 +52,15 @@ class ProfilePage extends StatelessWidget {
                 'Hobby: Procrastinating',
                 style: textStyle(20),
               ),
-              const SizedBox(
-                height: 50,
-              ),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const SubscribePage()));
+                  },
+                  child: Text(
+                    'Upgrade your Rank',
+                    style: TextStyle(color: Colors.black),
+                  )),
             ],
           )),
         ),

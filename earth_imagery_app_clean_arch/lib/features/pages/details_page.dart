@@ -1,10 +1,40 @@
-import 'package:flutter/material.dart';
-import 'package:photo_view/photo_view.dart';
+import 'dart:io';
 
-class DetailPage extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:http/http.dart' as http;
+import '../models/image_metadata.dart';
+
+class DetailPage extends StatefulWidget {
   const DetailPage({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<DetailPage> createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+  Future<String> saveImageLocally(String imageUrl) async {
+    try {
+      final response = await http.get(Uri.parse(imageUrl));
+      final bytes = response.bodyBytes;
+
+      final directory = await getExternalStorageDirectory();
+      final filePath =
+          '${directory!.path}/${DateTime.now().millisecondsSinceEpoch}.png';
+
+      await File(filePath).writeAsBytes(bytes);
+      print('FilePath: $filePath');
+
+      return filePath;
+    } catch (e) {
+      print('Error saving image locally: $e');
+      return ''; // Handle error appropriately
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +42,27 @@ class DetailPage extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
     String heroTag = 'imageHero_${args['image']}';
+
+    Future<void> saveToGallery() async {
+      try {
+        final box = await Hive.openBox<ImageMetadata>('imageMetadata');
+        final localFilePath = await saveImageLocally(args['image']);
+        final imageMetadata = ImageMetadata(
+            imageUrl: args['image'], localFilePath: localFilePath);
+        box.add(imageMetadata);
+        await box.close();
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Image saved to gallery.'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      } catch (e) {
+        print('Error saving to gallery: $e');
+        // Handle error appropriately
+      }
+    }
 
     return Scaffold(
       body: Stack(
@@ -49,7 +100,15 @@ class DetailPage extends StatelessWidget {
               args['date'],
               style: const TextStyle(fontSize: 18, color: Colors.white),
             ),
-          )
+          ),
+          Positioned(
+            right: 10,
+            top: 90,
+            child: IconButton(
+              onPressed: saveToGallery,
+              icon: Icon(Icons.download_rounded),
+            ),
+          ),
         ],
       ),
     );

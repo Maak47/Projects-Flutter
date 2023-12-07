@@ -1,35 +1,35 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_model.dart';
+part of 'image_metadata.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class UserModelAdapter extends TypeAdapter<UserModel> {
+class ImageMetadataAdapter extends TypeAdapter<ImageMetadata> {
   @override
   final int typeId = 0;
 
   @override
-  UserModel read(BinaryReader reader) {
+  ImageMetadata read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return UserModel(
-      username: fields[0] as String,
-      passwordHash: fields[1] as String,
+    return ImageMetadata(
+      imageUrl: fields[0] as String,
+      localFilePath: fields[1] as String,
     );
   }
 
   @override
-  void write(BinaryWriter writer, UserModel obj) {
+  void write(BinaryWriter writer, ImageMetadata obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.username)
+      ..write(obj.imageUrl)
       ..writeByte(1)
-      ..write(obj.passwordHash);
+      ..write(obj.localFilePath);
   }
 
   @override
@@ -38,7 +38,7 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is UserModelAdapter &&
+      other is ImageMetadataAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
