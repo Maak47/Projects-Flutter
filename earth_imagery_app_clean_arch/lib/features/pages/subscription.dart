@@ -36,6 +36,11 @@ class _SubscribePageState extends State<SubscribePage> {
     // Add more currencies and their conversion rates as needed
   };
 
+  final List<Color> colors = [
+    Colors.white,
+    Colors.black,
+    Colors.grey,
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
