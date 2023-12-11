@@ -1,0 +1,23 @@
+name: bloc_practice_timer
+description: timer app using bloc
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.2.3 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  bloc:
+  flutter_bloc:
+  equatable:
+
+dev_dependencies:
+  bloc_test:
+  flutter_test:
+    sdk: flutter
+  mocktail:
+
+flutter:
+  uses-material-design: true
