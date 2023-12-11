@@ -1,0 +1,26 @@
+name: bloc_practice_infinite_list
+description: infinite list using bloc
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.2.3 <4.0.0"
+
+dependencies:
+  bloc: ^8.1.0
+  bloc_concurrency: ^0.2.0
+  equatable: ^2.0.3
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^8.1.1
+  http: ^0.13.0
+  stream_transform: ^2.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  bloc_test:
+  mocktail:
+
+flutter:
+  uses-material-design: true
