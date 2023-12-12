@@ -1,0 +1,11 @@
+name: user_repository
+description: Dart package which manage the user domain.
+
+publish_to: none
+
+environment:
+  sdk: ">=3.2.3 <4.0.0"
+
+dependencies:
+  equatable:
+  uuid:

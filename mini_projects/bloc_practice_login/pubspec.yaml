@@ -1,0 +1,29 @@
+name: bloc_practice_login
+description: "Practicing bloc by creating a login screen"
+version: 1.0.0+1
+publish_to: "none"
+
+environment:
+  sdk: ">=3.2.3 <4.0.0"
+
+dependencies:
+  authentication_repository:
+    path: packages/authentication_repository
+  bloc:
+  flutter_bloc:
+  flutter:
+    sdk: flutter
+  formz:
+  equatable:
+  user_repository:
+    path: packages/user_repository
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints:
+  bloc_test:
+  mocktail:
+
+flutter:
+  uses-material-design: true
