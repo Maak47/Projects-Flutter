@@ -4,6 +4,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 class ThemeCubit extends HydratedCubit<Color> {
   ThemeCubit() : super(defaultColor);
+
   static const defaultColor = Color(0xFF2196F3);
 
   void updateTheme(Weather? weather) {
@@ -26,12 +27,12 @@ extension on Weather {
     switch (condition) {
       case WeatherCondition.clear:
         return Colors.yellow;
+      case WeatherCondition.snowy:
+        return Colors.lightBlueAccent;
       case WeatherCondition.cloudy:
         return Colors.blueGrey;
       case WeatherCondition.rainy:
         return Colors.indigoAccent;
-      case WeatherCondition.snowy:
-        return Colors.lightBlueAccent;
       case WeatherCondition.unknown:
         return ThemeCubit.defaultColor;
     }

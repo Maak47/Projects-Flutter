@@ -17,16 +17,16 @@ WeatherState _$WeatherStateFromJson(Map<String, dynamic> json) =>
               (v) =>
                   $enumDecodeNullable(_$WeatherStatusEnumMap, v) ??
                   WeatherStatus.initial),
-          weather: $checkedConvert(
-              'weather',
-              (v) => v == null
-                  ? null
-                  : Weather.fromJson(v as Map<String, dynamic>)),
           temperatureUnits: $checkedConvert(
               'temperature_units',
               (v) =>
                   $enumDecodeNullable(_$TemperatureUnitsEnumMap, v) ??
                   TemperatureUnits.celsius),
+          weather: $checkedConvert(
+              'weather',
+              (v) => v == null
+                  ? null
+                  : Weather.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },

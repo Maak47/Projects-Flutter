@@ -1,6 +1,6 @@
 {
-    "name": "bloc_practice_weather",
-    "short_name": "bloc_practice_weather",
+    "name": "flutter_weather",
+    "short_name": "flutter_weather",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

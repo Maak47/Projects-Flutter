@@ -1,16 +1,16 @@
 name: open_meteo_api
-description: "A Dart Api Client for the Open Meteo Api"
+description: A Dart API Client for the Open-Meteo API.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.2.3 <4.0.0"
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  http:
-  json_annotation:
+  http: ^0.13.0
+  json_annotation: ^4.6.0
 
 dev_dependencies:
-  build_runner:
-  json_serializable:
-  mocktail:
-  test:
+  build_runner: ^2.0.0
+  json_serializable: ^6.3.1
+  mocktail: ^1.0.0
+  test: ^1.16.4

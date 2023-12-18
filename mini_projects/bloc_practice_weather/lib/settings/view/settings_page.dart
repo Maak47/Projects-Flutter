@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_weather/weather/cubit/weather_cubit.dart';
-import 'package:flutter_weather/weather/models/models.dart';
+import 'package:flutter_weather/weather/weather.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage._();
+
   static Route<void> route(WeatherCubit weatherCubit) {
-    return MaterialPageRoute(
-        builder: (_) => BlocProvider.value(
-              value: weatherCubit,
-              child: const SettingsPage._(),
-            ));
+    return MaterialPageRoute<void>(
+      builder: (_) => BlocProvider.value(
+        value: weatherCubit,
+        child: const SettingsPage._(),
+      ),
+    );
   }
 
   @override
@@ -26,15 +27,16 @@ class SettingsPage extends StatelessWidget {
               return ListTile(
                 title: const Text('Temperature Units'),
                 isThreeLine: true,
-                subtitle:
-                    const Text('Use metric measurements for temperature units'),
+                subtitle: const Text(
+                  'Use metric measurements for temperature units.',
+                ),
                 trailing: Switch(
                   value: state.temperatureUnits.isCelsius,
                   onChanged: (_) => context.read<WeatherCubit>().toggleUnits(),
                 ),
               );
             },
-          )
+          ),
         ],
       ),
     );

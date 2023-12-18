@@ -9,15 +9,15 @@ class WeatherLoading extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Text(
-          '⛅',
-          style: TextStyle(fontSize: 64),
+        const Text('⛅', style: TextStyle(fontSize: 64)),
+        Text(
+          'Loading Weather',
+          style: theme.textTheme.headlineSmall,
         ),
-        Text('Loading Weather', style: theme.textTheme.headlineSmall),
         const Padding(
           padding: EdgeInsets.all(16),
           child: CircularProgressIndicator(),
-        )
+        ),
       ],
     );
   }
